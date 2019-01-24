@@ -1,0 +1,15 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://dy0110@github.com/dy0110/electron-todo.git",
+  "author": "Daichi Yoshida <d.y.0110.barcelona@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.0.2"
+  }
+}
