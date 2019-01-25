@@ -1,19 +1,24 @@
-const { app, BrowserWindow } = require("electron");
-let window;
+const { app, BrowserWindow, BrowserView } = require("electron");
+let win;
 
 function createWindow() {
   // ブラウザウインドウを作成
-  window = new BrowserWindow();
-
-  // デベロッパーツール自動起動
-  // win.webContents.openDevTools();
-
-  // index.htmlのロード
-  window.loadURL(`file://${__dirname}/index.html`);
-
-  window.on("closed", () => {
-    window = null;
+  win = new BrowserWindow({
+    width: 1000,
+    height: 800,
+    webPreferences: {
+      // jqueryを読み込む為に必要
+      nodeIntegration: false
+    }
   });
+  // 閉じるイベント
+  win.on("closed", () => {
+    win = null;
+  });
+
+  win.webContents.openDevTools();
+
+  win.webContents.loadURL(`file://${__dirname}/index.html`);
 }
 
 // Electron初期化関数(ブラウザ作成)
@@ -27,7 +32,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  if (window === null) {
+  if (win === null) {
     createWindow();
   }
 });
