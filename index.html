@@ -6,12 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- jQuery -->
     <script src="src/script/lib/jquery-3.3.1.min.js"></script>
+    <!-- font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+    <!-- material icon -->
+    <link rel="stylesheet" href="src/css/lib/iconfont/material-icons.css" />
+    <!-- material-design-lite -->
+    <script src="node_modules/material-design-lite/material.js"></script>
+    <link
+      rel="stylesheet"
+      href="node_modules/material-design-lite/material.css"
+    />
     <!-- todo APP -->
     <script src="src/script/app.js"></script>
     <link rel="stylesheet" href="src/css/style.css" />
     <title>TODOアプリ</title>
   </head>
   <body>
-    <h1>Hello Electron World!</h1>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-color--blue-A200">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">TODOアプリ</span>
+          <div class="mdl-layout-spacer"></div>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">メニュー</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="">入力</a>
+          <a class="mdl-navigation__link" href="">検索</a>
+          <a class="mdl-navigation__link" href="">設定</a>
+        </nav>
+      </div>
+    </div>
   </body>
 </html>

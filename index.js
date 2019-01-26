@@ -1,5 +1,7 @@
-const { app, BrowserWindow, BrowserView } = require("electron");
+const { app, BrowserWindow } = require("electron");
+require('electron-reload')(__dirname);
 let win;
+let dev_flg = true;
 
 function createWindow() {
   // ブラウザウインドウを作成
@@ -15,8 +17,10 @@ function createWindow() {
   win.on("closed", () => {
     win = null;
   });
-
-  win.webContents.openDevTools();
+  
+  if( dev_flg === true ){
+    win.webContents.openDevTools();
+  }
 
   win.webContents.loadURL(`file://${__dirname}/index.html`);
 }
