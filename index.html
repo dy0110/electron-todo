@@ -27,19 +27,71 @@
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header mdl-color--blue-A200">
+        <div class="mdl-layout-icon">
+          <button
+            id="demo-menu-lower-left"
+            class="mdl-button mdl-js-button mdl-button--icon"
+          >
+            <i class="material-icons">more_vert</i>
+          </button>
+        </div>
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">TODOアプリ</span>
           <div class="mdl-layout-spacer"></div>
         </div>
       </header>
-      <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">メニュー</span>
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="">入力</a>
-          <a class="mdl-navigation__link" href="">検索</a>
-          <a class="mdl-navigation__link" href="">設定</a>
-        </nav>
-      </div>
+      <ul
+        class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+        for="demo-menu-lower-left"
+      >
+        <li
+          class="mdl-menu__item mdl-menu__item--full-bleed-divider"
+          id="input_task_page"
+        >
+          入力
+        </li>
+        <li
+          class="mdl-menu__item mdl-menu__item--full-bleed-divider"
+          id="search_task_page"
+        >
+          検索
+        </li>
+        <li
+          class="mdl-menu__item mdl-menu__item--full-bleed-divider"
+          id="setting_task_page"
+        >
+          設定
+        </li>
+      </ul>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <div
+            class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid"
+          >
+            <div id="input_task" class="mdl-cell--12-col"></div>
+            <div
+              id="search_task"
+              class=" mdl-cell--12-col"
+              style="display:none;"
+            ></div>
+            <div
+              id="setting_task"
+              class=" mdl-cell--12-col"
+              style="display:none;"
+            ></div>
+          </div>
+        </div>
+      </main>
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <div class="mdl-logo">TODOリスト</div>
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="https://electronjs.org/">Electron</a></li>
+            <li><a href="https://getmdl.io/index.html">MATERIAL DESIGN LIT</a></li>
+            <li><a href="https://jquery.com/">jQuery</a></li>
+          </ul>
+        </div>
+      </footer>
     </div>
   </body>
 </html>
