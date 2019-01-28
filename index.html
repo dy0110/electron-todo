@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <meta
+    <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; style-src 'self' 'unsafe-inline';"
-    /> -->
+    />
     <!-- jQuery -->
     <script src="src/script/lib/jquery-3.3.1.min.js"></script>
     <!-- material icon -->
     <link rel="stylesheet" href="src/css/lib/iconfont/material-icons.css" />
-    <!-- material-components-web -->
+    <!-- bluma -->
     <link rel="stylesheet" href="node_modules/bulma/css/bulma.css" />
+    <script src="node_modules/bulma-modal-fx/dist/js/modal-fx.js"></script>
+    <link rel="stylesheet" href="node_modules/bulma-modal-fx/dist/css/modal-fx.css">
     <!-- todo APP -->
     <script src="src/script/app.js"></script>
     <script src="src/script/input_task.js"></script>
@@ -20,103 +22,111 @@
     <title>TODOアプリ</title>
   </head>
   <body>
-      <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-              <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-            </a>
-        
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-        
-          <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item">
-                Home
-              </a>
-        
-              <a class="navbar-item">
-                Documentation
-              </a>
-        
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                  More
-                </a>
-        
-                <div class="navbar-dropdown">
-                  <a class="navbar-item">
-                    About
-                  </a>
-                  <a class="navbar-item">
-                    Jobs
-                  </a>
-                  <a class="navbar-item">
-                    Contact
-                  </a>
-                  <hr class="navbar-divider">
-                  <a class="navbar-item">
-                    Report an issue
-                  </a>
+    <nav
+      class="navbar is-primary"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+            <div id="drop_flg" class="dropdown">
+                <div class="dropdown-trigger">
+                  <button id="menu_drop" class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <i class="material-icons md-24">more_vert</i>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <a href="#" id="input_task_page" class="dropdown-item">
+                      入力
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" id="search_task_page" class="dropdown-item">
+                      検索
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" id="setting_task_page" class="dropdown-item">
+                      設定
+                    </a>
                 </div>
               </div>
-            </div>
-        
-            <div class="navbar-end">
-              <div class="navbar-item">
-                <div class="buttons">
-                  <a class="button is-primary">
-                    <strong>Sign up</strong>
-                  </a>
-                  <a class="button is-light">
-                    Log in
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-    <!-- <div class="container-fluid">
-      <nav class="navbar navbar-light text-white bg-primary fixed-top">
-        <button
-          class="btn bmd-btn-icon dropdown-toggle"
-          type="button"
-          id="ex1"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <i class="material-icons">more_vert</i>
-        </button>
-        <div id="nav_title">TODOアプリ</div>
-        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex1">
-          <button class="dropdown-item" type="button" id="input_task_page">
-            入力
-          </button>
-          <button class="dropdown-item" type="button" id="search_task_page">
-            検索
-          </button>
-          <button class="dropdown-item" type="button" id="setting_task_page">
-            設定
-          </button>
+        </a>
+        <div class="navbar-item" style="color:white;"><h1>TODOアプリ</h1></div>
+      </div>
+    </nav>
+    <div class="level">
+        <div class="level-item has-text-centerd">
+            <div id="input_task"></div>
+            <div id="search_task" style="display:none;"></div>
+            <div id="setting_task" style="display:none;"></div>
         </div>
-      </nav>
     </div>
-    <div class="container page-content ">
-      <div id="input_task"></div>
-      <div id="search_task" style="display:none;"></div>
-      <div id="setting_task" style="display:none;"></div>
-    </div>
-    <div class="container-fluid">
-      <nav class="navbar fixed-bottom navbar-light bg-dark">
-        <span class="navbar-text text-white">
-          このアプリは<a class="text-white" id="open_window">Electron</a
-          >で構成されています。
-        </span>
-      </nav>
-    </div> -->
+    <footer class="footer" id="todo_footer">
+        <p>
+          このページのCSSフレームワークは<a href="https://bulma.io/">Bluma</a
+          >を利用しています。
+        </p>
+      </footer>
+      <!-- todo_delete modal -->
+      <div id="todo_delete_modal" class="modal modal-fx-fadeInScale">
+        <div class="modal-background close_modal"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">TODOの削除</p>
+            <a class="close_modal"><i class="fas fa-times"></i></a>
+          </header>
+          <section class="modal-card-body">
+            このTODOを削除します。<br />
+            よろしいですか?
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success" id="delete_todo_list">はい</button>
+            <button class="button is-danger close_modal">いいえ</button>
+          </footer>
+        </div>
+      </div>
+      <!-- todo_delete modal -->
+      <!-- all_delete modal -->
+      <div id="all_todo_delete_modal" class="modal modal-fx-fadeInScale">
+        <div class="modal-background close_modal"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">TODOの削除</p>
+            <a class="close_modal"><i class="fas fa-times"></i></a>
+          </header>
+          <section class="modal-card-body">
+            リストにある全てのTODOを削除します。<br />
+            よろしいですか?
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success" id="delete_all_todo">はい</button>
+            <button class="button is-danger close_modal">いいえ</button>
+          </footer>
+        </div>
+      </div>
+      <!-- all_delete modal -->
+      <!-- error_modal -->
+      <div id="error_modal" class="modal modal-fx-slideBottom">
+        <div class="modal-background close_modal"></div>
+        <div class="modal-content">
+          <div class="notification is-primary">
+            <button class="delete close_modal"></button>
+            <p id="error_message_area"></p>
+          </div>
+        </div>
+      </div>
+      <!-- error_modal -->
+      <!-- loading_modal -->
+      <div class="modal modal-fx-fadeInScale" id="loading_modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="notification is-success">
+                <button class="column is-half is-offset-one-quarter button is-success is-medium">
+                 <i class="fas fa-spinner fa-pulse fa-2x"></i>
+                </button>
+            </div>
+        </div>
+      </div>
+      <!-- loading_modal -->
   </body>
 </html>

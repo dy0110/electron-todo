@@ -12,6 +12,8 @@
   "devDependencies": {
     "@material-ui/core": "^3.9.0",
     "bulma": "^0.7.2",
+    "bulma-extensions": "^4.0.1",
+    "bulma-modal-fx": "^1.1.1",
     "electron": "^4.0.2",
     "electron-reload": "^1.4.0"
   },

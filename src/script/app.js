@@ -24,7 +24,12 @@ $(document).on("click", "#setting_task_page", () => {
 // エレクトロンのページを開く
 $(document).on("click", "#open_window", () => {
   const url = "https://electronjs.org/";
-  app.openWindow( url );
+  app.openWindow(url);
+});
+
+//dropdownメニュー
+$(document).on("click", "#menu_drop", () => {
+  app.dropMenu();
 });
 
 // == 関数オブジェクト定義 =========================
@@ -65,5 +70,14 @@ const app = {
   // ブラウザを開く
   openWindow: url => {
     urlopen(url);
+  },
+  // メニューを開く
+  dropMenu: () => {
+    const menu = $("#drop_flg");
+    if (menu.hasClass("is-active")) {
+      menu.removeClass("is-active");
+    } else {
+      menu.addClass("is-active");
+    }
   }
 };
