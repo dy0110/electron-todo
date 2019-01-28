@@ -3,95 +3,120 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline';"
+    /> -->
     <!-- jQuery -->
     <script src="src/script/lib/jquery-3.3.1.min.js"></script>
-    <!-- font -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto"
-      rel="stylesheet"
-    />
     <!-- material icon -->
     <link rel="stylesheet" href="src/css/lib/iconfont/material-icons.css" />
-    <!-- material-design-lite -->
-    <script src="node_modules/material-design-lite/material.js"></script>
-    <link
-      rel="stylesheet"
-      href="node_modules/material-design-lite/material.css"
-    />
+    <!-- material-components-web -->
+    <link rel="stylesheet" href="node_modules/bulma/css/bulma.css" />
     <!-- todo APP -->
     <script src="src/script/app.js"></script>
+    <script src="src/script/input_task.js"></script>
     <link rel="stylesheet" href="src/css/style.css" />
     <title>TODOアプリ</title>
   </head>
   <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header mdl-color--blue-A200">
-        <div class="mdl-layout-icon">
-          <button
-            id="demo-menu-lower-left"
-            class="mdl-button mdl-js-button mdl-button--icon"
-          >
-            <i class="material-icons">more_vert</i>
+      <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+              <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            </a>
+        
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+        
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item">
+                Home
+              </a>
+        
+              <a class="navbar-item">
+                Documentation
+              </a>
+        
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                  More
+                </a>
+        
+                <div class="navbar-dropdown">
+                  <a class="navbar-item">
+                    About
+                  </a>
+                  <a class="navbar-item">
+                    Jobs
+                  </a>
+                  <a class="navbar-item">
+                    Contact
+                  </a>
+                  <hr class="navbar-divider">
+                  <a class="navbar-item">
+                    Report an issue
+                  </a>
+                </div>
+              </div>
+            </div>
+        
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons">
+                  <a class="button is-primary">
+                    <strong>Sign up</strong>
+                  </a>
+                  <a class="button is-light">
+                    Log in
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+    <!-- <div class="container-fluid">
+      <nav class="navbar navbar-light text-white bg-primary fixed-top">
+        <button
+          class="btn bmd-btn-icon dropdown-toggle"
+          type="button"
+          id="ex1"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="material-icons">more_vert</i>
+        </button>
+        <div id="nav_title">TODOアプリ</div>
+        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex1">
+          <button class="dropdown-item" type="button" id="input_task_page">
+            入力
+          </button>
+          <button class="dropdown-item" type="button" id="search_task_page">
+            検索
+          </button>
+          <button class="dropdown-item" type="button" id="setting_task_page">
+            設定
           </button>
         </div>
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">TODOアプリ</span>
-          <div class="mdl-layout-spacer"></div>
-        </div>
-      </header>
-      <ul
-        class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-        for="demo-menu-lower-left"
-      >
-        <li
-          class="mdl-menu__item mdl-menu__item--full-bleed-divider"
-          id="input_task_page"
-        >
-          入力
-        </li>
-        <li
-          class="mdl-menu__item mdl-menu__item--full-bleed-divider"
-          id="search_task_page"
-        >
-          検索
-        </li>
-        <li
-          class="mdl-menu__item mdl-menu__item--full-bleed-divider"
-          id="setting_task_page"
-        >
-          設定
-        </li>
-      </ul>
-      <main class="mdl-layout__content">
-        <div class="page-content">
-          <div
-            class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid"
-          >
-            <div id="input_task" class="mdl-cell--12-col"></div>
-            <div
-              id="search_task"
-              class=" mdl-cell--12-col"
-              style="display:none;"
-            ></div>
-            <div
-              id="setting_task"
-              class=" mdl-cell--12-col"
-              style="display:none;"
-            ></div>
-          </div>
-        </div>
-      </main>
-      <footer class="mdl-mini-footer">
-        <div class="mdl-mini-footer__left-section">
-          <div class="mdl-logo">TODOリスト</div>
-          <ul class="mdl-mini-footer__link-list">
-            <li><a href="https://electronjs.org/">Electron</a></li>
-            <li><a href="https://getmdl.io/index.html">MATERIAL DESIGN LIT</a></li>
-            <li><a href="https://jquery.com/">jQuery</a></li>
-          </ul>
-        </div>
-      </footer>
+      </nav>
     </div>
+    <div class="container page-content ">
+      <div id="input_task"></div>
+      <div id="search_task" style="display:none;"></div>
+      <div id="setting_task" style="display:none;"></div>
+    </div>
+    <div class="container-fluid">
+      <nav class="navbar fixed-bottom navbar-light bg-dark">
+        <span class="navbar-text text-white">
+          このアプリは<a class="text-white" id="open_window">Electron</a
+          >で構成されています。
+        </span>
+      </nav>
+    </div> -->
   </body>
 </html>

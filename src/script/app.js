@@ -21,6 +21,12 @@ $(document).on("click", "#search_task_page", () => {
 $(document).on("click", "#setting_task_page", () => {
   app.changeSettingTask();
 });
+// エレクトロンのページを開く
+$(document).on("click", "#open_window", () => {
+  const url = "https://electronjs.org/";
+  app.openWindow( url );
+});
+
 // == 関数オブジェクト定義 =========================
 const app = {
   // タスク入力ページ
@@ -55,5 +61,9 @@ const app = {
       search_task = false;
       setting_task = true;
     }
+  },
+  // ブラウザを開く
+  openWindow: url => {
+    urlopen(url);
   }
 };
