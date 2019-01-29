@@ -1,13 +1,26 @@
 // == グローバル変数 ========================
-let input_task = true;
-let search_task = false;
-let setting_task = false;
+let input_task = true; // ページ遷移管理フラグ
+let search_task = false; // ページ遷移管理フラグ
+let setting_task = false; // ページ遷移管理フラグ
+let sub_task_array = []; //サブタスク格納オブジェクト
 // == イベント定義 ========================
 $(document).ready(() => {
   // ページを読み込む
-  $("#input_task").load("src/html/input_task.html #input_task_content");
+  $("#input_task").load("src/html/input_task.html #input_task_content", () => {
+    // タグインプットを定義
+   
+  });
   $("#search_task").load("src/html/search_task.html #search_task_content");
   $("#setting_task").load("src/html/setting_task.html #setting_task_content");
+  $("#load_dialog").load( "src/html/dialogs.html #dialogs" )
+  // サイドバー定義
+  $("#sidebar").simplerSidebar({
+    align: "left",
+    selectors: {
+      trigger: "#toggle-sidebar",
+      quitter: ".close-sidebar"
+    }
+  });
 });
 // サイドメニューのクリックイベント定義
 $(document).on("click", "#input_task_page", () => {
@@ -23,13 +36,13 @@ $(document).on("click", "#setting_task_page", () => {
 });
 // エレクトロンのページを開く
 $(document).on("click", "#open_window", () => {
-  const url = "https://electronjs.org/";
+  const url = "https://bulma.io/";
   app.openWindow(url);
 });
 
-//dropdownメニュー
-$(document).on("click", "#menu_drop", () => {
-  app.dropMenu();
+//モーダルを閉じる
+$(document).on("click", ".close_modal", () => {
+  app.closeModal();
 });
 
 // == 関数オブジェクト定義 =========================
@@ -37,9 +50,9 @@ const app = {
   // タスク入力ページ
   changeInputTask: () => {
     if (input_task == false) {
-      $("#input_task").show("slow");
-      $("#search_task").hide("slow");
-      $("#setting_task").hide("slow");
+      $("#input_task").show();
+      $("#search_task").hide();
+      $("#setting_task").hide();
       input_task = true;
       search_task = false;
       setting_task = false;
@@ -48,9 +61,9 @@ const app = {
   // タスク検索ページ
   changeSearchTask: () => {
     if (search_task == false) {
-      $("#input_task").hide("slow");
-      $("#search_task").show("slow");
-      $("#setting_task").hide("slow");
+      $("#input_task").hide();
+      $("#search_task").show();
+      $("#setting_task").hide();
       input_task = false;
       search_task = true;
       setting_task = false;
@@ -59,9 +72,9 @@ const app = {
   // 設定ページ
   changeSettingTask: () => {
     if (setting_task == false) {
-      $("#input_task").hide("slow");
-      $("#search_task").hide("slow");
-      $("#setting_task").show("slow");
+      $("#input_task").hide();
+      $("#search_task").hide();
+      $("#setting_task").show();
       input_task = false;
       search_task = false;
       setting_task = true;
@@ -72,12 +85,11 @@ const app = {
     urlopen(url);
   },
   // メニューを開く
-  dropMenu: () => {
-    const menu = $("#drop_flg");
-    if (menu.hasClass("is-active")) {
-      menu.removeClass("is-active");
-    } else {
-      menu.addClass("is-active");
-    }
+ closeModal: () => {
+  const modal = $("div.modal.is-active");
+  if (modal !== null) {
+    // モーダルを隠す
+    modal.removeClass("is-active");
   }
+ }
 };

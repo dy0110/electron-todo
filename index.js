@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 require('electron-reload')(__dirname);
+const taginput = require("bulma-extensions/bulma-tagsinput/dist/js/bulma-tagsinput")
 let win;
 let dev_flg = true;
 

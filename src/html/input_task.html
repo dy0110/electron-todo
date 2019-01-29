@@ -1,3 +1,390 @@
-<div id="input_task_content" class="row">
-    <h1>入力</h1>
+<div id="input_task_content">
+  <!-- task入力パネル -->
+  <div class="level">
+    <div class="level-item has-text-centerd">
+      <div class="panel">
+        <p class="panel-heading">TODO入力</p>
+        <div class="panel-block">
+          <div class="level">
+            <div class="field is-grouped level-item has-text-centered">
+              <div class="control">
+                <label class="label input_label"
+                  ><i class="material-icons"> event_note </i> タスク入力</label
+                >
+                <input
+                  id="input_main_task"
+                  class="input is-primary"
+                  type="text"
+                  placeholder="タスクを入力"
+                />
+                <br />
+                <br />
+                <label class="label input_label"
+                  ><i class="material-icons"> event_note </i>
+                  サブタスク入力</label
+                >
+                <input
+                  id="input_sub_task"
+                  class="input is-primary"
+                  type="text"
+                  placeholder="タスクを入力"
+                />
+                <br />
+                <br />
+                <div class="level-item level-right">
+                  <div class="buttons">
+                    <button class="button is-primary" id="add_sub_task">
+                      サブタスク追加
+                    </button>
+                    <button class="button is-link" id="check_sub_task">
+                        サブタスク確認
+                    </button>
+                  </div>
+                </div>
+                <br /><br />
+                <label class="label input_label">
+                  <i class="material-icons"> today </i> 締め切り時刻
+                </label>
+                <input
+                  type="datetime"
+                  class="input is-primary"
+                  name=""
+                  id="input_date"
+                  placeholder="締め切り時刻を入力"
+                />
+                <br /><br />
+                <label class="label input_label"
+                  ><i class="material-icons"> priority_high </i>優先度</label
+                >
+                <br />
+                <div class="select is-primary">
+                  <select name="" id="input_priority">
+                    <option value="high">高い</option>
+                    <option value="usually">普通</option>
+                    <option value="low">低い</option>
+                  </select>
+                </div>
+                <br /><br />
+                <div class="level-item level-right">
+                  <button class="button is-link" id="get_todo">登録</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- task入力パネル -->
+  <!-- タスクカード表示 -->
+  <div id="task_card_erea" class="box is-shadowless">
+    <div id="task_card_inline" class="columns is-multiline">
+      <div class="column is-4">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title task_content">お買い物</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle task_dead_line">2019/1/29 15:30</div>
+              <div class="subtitle task_priority">高い</div>
+              <div class="field sub_task">
+                <input
+                  class="is-checkradio"
+                  id="subtask1"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                />
+                <label for="subtask1">お肉</label>
+              </div>
+              <div class="field sub_task">
+                <input
+                  class="is-checkradio"
+                  id="subtask2"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                />
+                <label for="subtask2">人参</label>
+              </div>
+              <div class="field sub_task">
+                <input
+                  class="is-checkradio"
+                  id="subtask3"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="subtask3">玉ねぎ</label>
+              </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item input_label"
+              ><i class="material-icons"> done </i>完了</a
+            >
+            <a href="#" class="card-footer-item input_label"
+              ><i class="material-icons"> delete </i>削除</a
+            >
+          </footer>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="exampleCheckbox"
+                  type="checkbox"
+                  name="exampleCheckbox"
+                  checked="checked"
+                />
+                <label for="exampleCheckbox">Check me</label>
+              </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div id="task_card_erea" class="tile is-ancestor">
+    <div class="tile is-parent is-4">
+      <div class="tile is-child">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                    <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                    <label for="exampleCheckbox">Check me</label>
+                </div>
+                <div class="field">
+                        <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                        <label for="exampleCheckbox">Check me</label>
+                </div>
+                <div class="field">
+                        <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                        <label for="exampleCheckbox">Check me</label>
+                </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="tile is-parent is-4">
+      <div class="tile is-child">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                    <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                    <label for="exampleCheckbox">Check me</label>
+                </div>
+                <div class="field">
+                        <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                        <label for="exampleCheckbox">Check me</label>
+                </div>
+                <div class="field">
+                        <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                        <label for="exampleCheckbox">Check me</label>
+                </div>
+                <div class="field">
+                        <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                        <label for="exampleCheckbox">Check me</label>
+                </div>
+                <div class="field">
+                        <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                        <label for="exampleCheckbox">Check me</label>
+                </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="tile is-parent is-4">
+      <div class="tile is-child">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                    <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                    <label for="exampleCheckbox">Check me</label>
+            </div>
+            <div class="field">
+                    <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                    <label for="exampleCheckbox">Check me</label>
+            </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="tile is-parent is-4">
+      <div class="tile is-child">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">タスク名</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <div class="subtitle">2019/1/29 15:30</div>
+              <div class="subtitle">高い</div>
+              <div class="field">
+                    <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                    <label for="exampleCheckbox">Check me</label>
+            </div>
+            <div class="field">
+                    <input class="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" checked="checked">
+                    <label for="exampleCheckbox">Check me</label>
+            </div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item">完了</a>
+            <a href="#" class="card-footer-item">削除</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div> -->
 </div>

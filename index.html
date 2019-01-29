@@ -9,12 +9,21 @@
     />
     <!-- jQuery -->
     <script src="src/script/lib/jquery-3.3.1.min.js"></script>
+    <!-- simple slidebar -->
+    <script src="node_modules/simpler-sidebar/dist/jquery.simpler-sidebar.js"></script>
     <!-- material icon -->
     <link rel="stylesheet" href="src/css/lib/iconfont/material-icons.css" />
     <!-- bluma -->
     <link rel="stylesheet" href="node_modules/bulma/css/bulma.css" />
     <script src="node_modules/bulma-modal-fx/dist/js/modal-fx.js"></script>
-    <link rel="stylesheet" href="node_modules/bulma-modal-fx/dist/css/modal-fx.css">
+    <!-- bluma modal fx -->
+    <link
+      rel="stylesheet"
+      href="node_modules/bulma-modal-fx/dist/css/modal-fx.css"
+    />
+    <!-- bluma extensions -->
+    <link rel="stylesheet" href="node_modules/bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio.min.css">
+    <link rel="stylesheet" href="node_modules/bulma-extensions/bulma-badge/dist/css/bulma-badge.min.css">
     <!-- todo APP -->
     <script src="src/script/app.js"></script>
     <script src="src/script/input_task.js"></script>
@@ -29,104 +38,41 @@
     >
       <div class="navbar-brand">
         <a class="navbar-item" href="#">
-            <div id="drop_flg" class="dropdown">
-                <div class="dropdown-trigger">
-                  <button id="menu_drop" class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu">
-                      <i class="material-icons md-24">more_vert</i>
-                  </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div class="dropdown-content">
-                    <a href="#" id="input_task_page" class="dropdown-item">
-                      入力
-                    </a>
-                    <hr class="dropdown-divider">
-                    <a href="#" id="search_task_page" class="dropdown-item">
-                      検索
-                    </a>
-                    <hr class="dropdown-divider">
-                    <a href="#" id="setting_task_page" class="dropdown-item">
-                      設定
-                    </a>
-                </div>
-              </div>
+          <span id="toggle-sidebar" class="">
+            <i class="material-icons md-24"> menu </i>
+          </span>
         </a>
-        <div class="navbar-item" style="color:white;"><h1>TODOアプリ</h1></div>
+        <div class="navbar-item"><h1>TODOアプリ</h1></div>
       </div>
     </nav>
-    <div class="level">
-        <div class="level-item has-text-centerd">
-            <div id="input_task"></div>
-            <div id="search_task" style="display:none;"></div>
-            <div id="setting_task" style="display:none;"></div>
+    <div id="sidebar">
+      <div id="sidebar-wrapper" class="sidebar-wrapper">
+        <div class="menu">
+          <p class="menu-label">メニュー</p>
+          <ul class="menu-list">
+            <li>
+              <a class="close-sidebar" id="input_task_page" href="#">入力</a>
+            </li>
+            <li>
+              <a class="close-sidebar" id="search_task_page" href="#">検索</a>
+            </li>
+            <li>
+              <a class="close-sidebar" id="setting_task_page" href="#">設定</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
+    <br />
+    <div id="input_task"></div>
+    <div id="search_task" style="display:none;"></div>
+    <div id="setting_task" style="display:none;"></div>
     <footer class="footer" id="todo_footer">
-        <p>
-          このページのCSSフレームワークは<a href="https://bulma.io/">Bluma</a
-          >を利用しています。
-        </p>
-      </footer>
-      <!-- todo_delete modal -->
-      <div id="todo_delete_modal" class="modal modal-fx-fadeInScale">
-        <div class="modal-background close_modal"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">TODOの削除</p>
-            <a class="close_modal"><i class="fas fa-times"></i></a>
-          </header>
-          <section class="modal-card-body">
-            このTODOを削除します。<br />
-            よろしいですか?
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-success" id="delete_todo_list">はい</button>
-            <button class="button is-danger close_modal">いいえ</button>
-          </footer>
-        </div>
-      </div>
-      <!-- todo_delete modal -->
-      <!-- all_delete modal -->
-      <div id="all_todo_delete_modal" class="modal modal-fx-fadeInScale">
-        <div class="modal-background close_modal"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">TODOの削除</p>
-            <a class="close_modal"><i class="fas fa-times"></i></a>
-          </header>
-          <section class="modal-card-body">
-            リストにある全てのTODOを削除します。<br />
-            よろしいですか?
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-success" id="delete_all_todo">はい</button>
-            <button class="button is-danger close_modal">いいえ</button>
-          </footer>
-        </div>
-      </div>
-      <!-- all_delete modal -->
-      <!-- error_modal -->
-      <div id="error_modal" class="modal modal-fx-slideBottom">
-        <div class="modal-background close_modal"></div>
-        <div class="modal-content">
-          <div class="notification is-primary">
-            <button class="delete close_modal"></button>
-            <p id="error_message_area"></p>
-          </div>
-        </div>
-      </div>
-      <!-- error_modal -->
-      <!-- loading_modal -->
-      <div class="modal modal-fx-fadeInScale" id="loading_modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="notification is-success">
-                <button class="column is-half is-offset-one-quarter button is-success is-medium">
-                 <i class="fas fa-spinner fa-pulse fa-2x"></i>
-                </button>
-            </div>
-        </div>
-      </div>
-      <!-- loading_modal -->
+      <p>
+        このページのCSSフレームワークは<a id="open_window" href="#">Bluma</a
+        >を利用しています。
+      </p>
+    </footer>
+    <div id="load_dialog"></div>
   </body>
 </html>

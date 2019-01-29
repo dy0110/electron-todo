@@ -15,7 +15,8 @@
     "bulma-extensions": "^4.0.1",
     "bulma-modal-fx": "^1.1.1",
     "electron": "^4.0.2",
-    "electron-reload": "^1.4.0"
+    "electron-reload": "^1.4.0",
+    "simpler-sidebar": "^2.2.5"
   },
   "dependencies": {
     "remove": "^0.1.5"
