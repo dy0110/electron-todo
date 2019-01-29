@@ -16,6 +16,7 @@
     "bulma-modal-fx": "^1.1.1",
     "electron": "^4.0.2",
     "electron-reload": "^1.4.0",
+    "flatpickr": "^4.5.2",
     "simpler-sidebar": "^2.2.5"
   },
   "dependencies": {

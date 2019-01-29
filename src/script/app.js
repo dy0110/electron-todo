@@ -7,12 +7,16 @@ let sub_task_array = []; //サブタスク格納オブジェクト
 $(document).ready(() => {
   // ページを読み込む
   $("#input_task").load("src/html/input_task.html #input_task_content", () => {
-    // タグインプットを定義
-   
+    // カレンダー定義
+    $("#input_date").flatpickr({
+      enableTime: true,
+      dateFormat: "Y/m/d H:i",
+      locale: "ja"
+    });
   });
   $("#search_task").load("src/html/search_task.html #search_task_content");
   $("#setting_task").load("src/html/setting_task.html #setting_task_content");
-  $("#load_dialog").load( "src/html/dialogs.html #dialogs" )
+  $("#load_dialog").load("src/html/dialogs.html #dialogs");
   // サイドバー定義
   $("#sidebar").simplerSidebar({
     align: "left",
@@ -85,11 +89,11 @@ const app = {
     urlopen(url);
   },
   // メニューを開く
- closeModal: () => {
-  const modal = $("div.modal.is-active");
-  if (modal !== null) {
-    // モーダルを隠す
-    modal.removeClass("is-active");
+  closeModal: () => {
+    const modal = $("div.modal.is-active");
+    if (modal !== null) {
+      // モーダルを隠す
+      modal.removeClass("is-active");
+    }
   }
- }
 };
