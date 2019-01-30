@@ -29,8 +29,15 @@
     <script src="node_modules/flatpickr/dist/flatpickr.js"></script>
     <link rel="stylesheet" href="node_modules/flatpickr/dist/themes/material_green.css">
     <script src="node_modules/flatpickr/dist/l10n/ja.js"></script>
+    <!-- dexie.js -->
+    <script src="node_modules/dexie/dist/dexie.js"></script>
+    <!-- validator -->
+    <script src="node_modules/validator/validator.js"></script>
+    <!-- uuid.js -->
+    <script src="node_modules/uuidjs/src/uuid.js"></script>
     <!-- my app -->
     <script src="src/script/app.js"></script>
+    <script src="src/script/indexeddb.js"></script>
     <script src="src/script/input_task.js"></script>
     <link rel="stylesheet" href="src/css/style.css" />
     <title>TODOアプリ</title>
@@ -69,9 +76,9 @@
       </div>
     </div>
     <br />
-    <div id="input_task"></div>
-    <div id="search_task" style="display:none;"></div>
-    <div id="setting_task" style="display:none;"></div>
+    <div id="load_input_task"></div>
+    <div id="load_search_task" style="display:none;"></div>
+    <div id="load_setting_task" style="display:none;"></div>
     <footer class="footer" id="todo_footer">
       <p>
         このページのCSSフレームワークは<a id="open_window" href="#">Bluma</a

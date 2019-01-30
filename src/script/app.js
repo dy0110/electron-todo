@@ -2,11 +2,11 @@
 let input_task = true; // ページ遷移管理フラグ
 let search_task = false; // ページ遷移管理フラグ
 let setting_task = false; // ページ遷移管理フラグ
-let sub_task_array = []; //サブタスク格納オブジェクト
+let task_array = []; //タスク格納オブジェクト
 // == イベント定義 ========================
 $(document).ready(() => {
   // ページを読み込む
-  $("#input_task").load("src/html/input_task.html #input_task_content", () => {
+  $("#load_input_task").load("src/html/input_task.html #input_task_content", () => {
     // カレンダー定義
     $("#input_date").flatpickr({
       enableTime: true,
@@ -14,8 +14,8 @@ $(document).ready(() => {
       locale: "ja"
     });
   });
-  $("#search_task").load("src/html/search_task.html #search_task_content");
-  $("#setting_task").load("src/html/setting_task.html #setting_task_content");
+  $("#load_search_task").load("src/html/search_task.html #search_task_content");
+  $("#load_setting_task").load("src/html/setting_task.html #setting_task_content");
   $("#load_dialog").load("src/html/dialogs.html #dialogs");
   // サイドバー定義
   $("#sidebar").simplerSidebar({
@@ -25,6 +25,8 @@ $(document).ready(() => {
       quitter: ".close-sidebar"
     }
   });
+  // indexedDBへ接続
+  dbUtils.createDb();
 });
 // サイドメニューのクリックイベント定義
 $(document).on("click", "#input_task_page", () => {
@@ -88,12 +90,18 @@ const app = {
   openWindow: url => {
     urlopen(url);
   },
-  // メニューを開く
+  // モーダルを閉じる
   closeModal: () => {
     const modal = $("div.modal.is-active");
     if (modal !== null) {
       // モーダルを隠す
       modal.removeClass("is-active");
     }
+  },
+  // エラーモーダルを開く
+  openErrorModal: err_msg => {
+    $("#error_message_area").text("");
+    $("#error_message_area").text( err_msg );
+    $("#error_modal").addClass( "is-active" )
   }
 };
