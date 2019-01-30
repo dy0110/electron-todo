@@ -1,5 +1,10 @@
+// == グローバル変数 ========================
+const priority_obj = {
+  high: "高い",
+  usually: "普通",
+  low: "低い"
+};
 // == イベント定義 ====================
-
 // タスク追加
 $(document).on("click", "#add_task", () => {
   const task = $("#input_task").val();
@@ -34,12 +39,29 @@ $(document).on("click", "#add_todo", () => {
   let todo_name = validator.escape($("#input_name").val());
   if (todo_name === "") {
     openErrorModal("TODO名を入力してください。");
+    return;
   }
   let task = task_array.join(",");
   let deade_line = validator.escape($("#input_date").val());
   let priority = $("#input_priority").val();
   // indexedDBへ登録
-  dbUtils.addDb(id, todo_name, task, deade_line, priority);
+  //dbUtils.addDb(id, todo_name, task, deade_line, priority);
+  inputTask.addTodoCard(id, todo_name, task, deade_line, priority);
+  // 初期化
+  $("#input_name").val("");
+  $("#input_date").val("");
+  task_array = [];
+  $("#input_priority").val("high");
+});
+
+// チェックボックスのコントロール
+$(document).on("click", ".is-checkradio", event => {
+  const check = $(event.target).attr("check");
+  if (check === "on") {
+    $(event.target).attr("check", "off");
+  } else if (check === "off") {
+    $(event.target).attr("check", "on");
+  }
 });
 
 // == 関数オブジェクト定義 =============
@@ -94,9 +116,64 @@ const inputTask = {
     $("#check_task").attr("data-badge", task_array.length);
     app.closeModal();
   },
-  // TODO登録
-  // TODO: HTMLを構築する
-  addTodoCard: (id, name, task, deadeline, priority)=>{
-
+  // TODO登録 カードを作製
+  addTodoCard: (id, name, task, deadeline, priority) => {
+    // 優先度判定
+    let priority_text;
+    if (priority == "high") {
+      priority_text = priority_obj.high;
+    } else if (priority == "usually") {
+      priority_text = priority_obj.usually;
+    } else if ((priority = "low")) {
+      priority_text = priority_obj.low;
+    }
+    // 締め切り
+    let deade_line_text;
+    if (deadeline === "") {
+      deade_line_text = "締め切りなし";
+    } else {
+      deade_line_text = deadeline + "(締め切り)";
+    }
+    // カード作製
+    let todo_card = '<div class="column is-4">';
+    todo_card += '<div class="card" id="' + id + '">';
+    todo_card += '<header class="card-header">';
+    todo_card += '<p class="card-header-title task_content">' + name + "</p>";
+    todo_card += "</header>";
+    todo_card += '<div class="card-content">';
+    todo_card += '<div class="content">';
+    todo_card +=
+      '<div class="subtitle task_dead_line">' + deade_line_text + "</div>";
+    todo_card +=
+      ' <div class="subtitle task_priority">' +
+      priority_text +
+      "(優先度)</div>";
+    if (task !== "") {
+      // タスクがあればチェックボックス表示
+      let array = task.split(",");
+      for (let i = 0; i < array.length; i++) {
+        let item_id = UUID.generate();
+        todo_card += '<div class="field task">';
+        todo_card +=
+          '<input class="is-checkradio" type="checkbox" id="' +
+          item_id +
+          '" check="off"/>';
+        todo_card += '<label for="' + item_id + '">' + array[i] + "</label>";
+        todo_card += "</div>";
+      }
+    }
+    todo_card += "</div></div>";
+    todo_card += '<footer class="card-footer">';
+    todo_card +=
+      '<a href="#" class="card-footer-item input_label complete_task" task_id="' +
+      id +
+      '"><i class="material-icons"> done </i>完了</a>';
+    todo_card +=
+      '<a href="#" class="card-footer-item input_label delete_task" task_id="' +
+      id +
+      '"><i class="material-icons"> delete </i>削除</a>';
+    todo_card += " </footer></div></div>";
+    // HTMLを表示する
+    $("#task_card_inline").append(todo_card);
   }
 };

@@ -1,6 +1,5 @@
 // == グローバル変数 ==
 const db = new Dexie("AppDB"); // Dexie.jsオブジェクト
-const spawn = db.spawn
 // == 関数オブジェクト定義 ==
 const dbUtils = {
   // indexedDBを開く
@@ -17,10 +16,9 @@ const dbUtils = {
   },
   // TODOを追加
   addDb: (id, name, task, deadeline, priority) => {
-    // ジェネレーター(*)はアロー関数で使えない
-    // TODO: トランザクション使った処理
-    spawn(function*() {
-      const item = yield db.add({
+    // 非同期処理で更新
+    db.transaction("rw", db.tasks, async () => {
+      await db.add({
         id: id,
         name: name,
         task: task,
@@ -30,13 +28,14 @@ const dbUtils = {
         createdate: new Date(),
         updatedate: new Date()
       });
-    }).then(
-      () => {
+    })
+      .then(() => {
         console.log("Add TODO data Complete!");
-        inputTask.addTodoCard(id, name, task, deadeline, priority)
-      }
-    ).catch( (e) => {
-      console.error("Add TODO data Failed: " + e);
-    } );
+        // htmlを描画する
+        inputTask.addTodoCard(id, name, task, deadeline, priority);
+      })
+      .catch(e => {
+        console.error("Add TODO data Failed: " + e);
+      });
   }
 };
