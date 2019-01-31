@@ -45,8 +45,7 @@ $(document).on("click", "#add_todo", () => {
   let deade_line = validator.escape($("#input_date").val());
   let priority = $("#input_priority").val();
   // indexedDBへ登録
-  //dbUtils.addDb(id, todo_name, task, deade_line, priority);
-  inputTask.addTodoCard(id, todo_name, task, deade_line, priority);
+  dbUtils.addDb(id, todo_name, task, deade_line, priority);
   // 初期化
   $("#input_name").val("");
   $("#input_date").val("");
@@ -56,14 +55,25 @@ $(document).on("click", "#add_todo", () => {
 
 // チェックボックスのコントロール
 $(document).on("click", ".is-checkradio", event => {
-  const check = $(event.target).attr("check");
-  if (check === "on") {
-    $(event.target).attr("check", "off");
-  } else if (check === "off") {
-    $(event.target).attr("check", "on");
-  }
+  const target = $(event.target);
+  const check = target.attr("check");
+  const array_index = target.attr("array_index");
+  const id = target.attr("task_id");
+  // indexedDB更新
+  dbUtils.upDateTaskIschek(id, array_index, check, target);
 });
 
+// 完了ボタン 
+$(document).on("click", ".complete_task", event => {
+  const id = $(event.target).attr("task_id");
+  dbUtils.upDateComplete(id);
+});
+
+// 削除ボタン
+$(document).on("click", ".delete_task", event => {
+  const id = $(event.target).attr("task_id");
+  dbUtils.deleteItem(id);
+});
 // == 関数オブジェクト定義 =============
 const inputTask = {
   // タスク追加
@@ -157,6 +167,10 @@ const inputTask = {
         todo_card +=
           '<input class="is-checkradio" type="checkbox" id="' +
           item_id +
+          '" array_index="' +
+          i +
+          '" task_id="' +
+          id +
           '" check="off"/>';
         todo_card += '<label for="' + item_id + '">' + array[i] + "</label>";
         todo_card += "</div>";
@@ -175,5 +189,18 @@ const inputTask = {
     todo_card += " </footer></div></div>";
     // HTMLを表示する
     $("#task_card_inline").append(todo_card);
+  },
+  // チェックボタンの更新
+  isChecked: (target, check) => {
+    if (check === "on") {
+      $(target).attr("check", "off");
+    } else if (check === "off") {
+      $(target).attr("check", "on");
+    }
+  },
+  // カードの削除
+  cardDelete: id => {
+    let cloumn = $("#" + id).parent();
+    cloumn.remove();
   }
 };

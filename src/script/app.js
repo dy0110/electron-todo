@@ -13,6 +13,8 @@ $(document).ready(() => {
       dateFormat: "Y/m/d H:i",
       locale: "ja"
     });
+    // 保存されたデータの取り出し
+    dbUtils.getAllTodo();
   });
   $("#load_search_task").load("src/html/search_task.html #search_task_content");
   $("#load_setting_task").load("src/html/setting_task.html #setting_task_content");
