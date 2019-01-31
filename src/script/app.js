@@ -29,6 +29,8 @@ $(document).ready(() => {
   });
   // indexedDBへ接続
   dbUtils.createDb();
+  // moment.js利用
+  moment().format();
 });
 // サイドメニューのクリックイベント定義
 $(document).on("click", "#input_task_page", () => {

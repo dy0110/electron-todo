@@ -41,11 +41,16 @@ $(document).on("click", "#add_todo", () => {
     openErrorModal("TODO名を入力してください。");
     return;
   }
-  let task = task_array.join(",");
+  let task;
+  if( task_array.length === 0 ){
+    task = "";
+  } else {
+    task = task_array;
+  }
   let deade_line = validator.escape($("#input_date").val());
   let priority = $("#input_priority").val();
   // indexedDBへ登録
-  dbUtils.addDb(id, todo_name, task, deade_line, priority);
+  dbUtils.addDb(id, todo_name, task_array, deade_line, priority);
   // 初期化
   $("#input_name").val("");
   $("#input_date").val("");
@@ -54,7 +59,7 @@ $(document).on("click", "#add_todo", () => {
 });
 
 // チェックボックスのコントロール
-$(document).on("click", ".is-checkradio", event => {
+$(document).on("click", ".task_check", event => {
   const target = $(event.target);
   const check = target.attr("check");
   const array_index = target.attr("array_index");
@@ -83,7 +88,11 @@ const inputTask = {
     let clean = validator.escape(task);
     console.log("task:" + task);
     console.log("clean:" + clean);
-    task_array.push(clean);
+    let obj = {
+      task: clean,
+      ischeck: 0
+    }
+    task_array.push(obj);
     $("#check_task").addClass("badge");
     $("#check_task").attr("data-badge", task_array.length);
   },
@@ -96,7 +105,7 @@ const inputTask = {
       for (let i = 0; i < task_array.length; i++) {
         let item = task_array[i];
         let task_data = "<tr>";
-        task_data += "<td class='task_item'>" + item + "</td>";
+        task_data += "<td class='task_item'>" + item.task + "</td>";
         task_data +=
           "<td><button id='delete_subtask_item' class='button is-danger is-rounded' index='" +
           i +
@@ -160,19 +169,23 @@ const inputTask = {
       "(優先度)</div>";
     if (task !== "") {
       // タスクがあればチェックボックス表示
-      let array = task.split(",");
-      for (let i = 0; i < array.length; i++) {
+      for (let i = 0; i < task.length; i++) {
         let item_id = UUID.generate();
+        let item = task[i]
         todo_card += '<div class="field task">';
         todo_card +=
-          '<input class="is-checkradio" type="checkbox" id="' +
+          '<input class="switch is-rounded task_check" type="checkbox" id="' +
           item_id +
           '" array_index="' +
           i +
           '" task_id="' +
-          id +
-          '" check="off"/>';
-        todo_card += '<label for="' + item_id + '">' + array[i] + "</label>";
+          id ;
+        if( item.ischeck === 0 ){
+          todo_card += '" check="off"/>';
+        } else {
+          todo_card += '" check="off" checked="checked"/>';
+        }
+        todo_card += '<label for="' + item_id + '">' + item.task + "</label>";
         todo_card += "</div>";
       }
     }

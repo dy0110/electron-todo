@@ -23,26 +23,13 @@ const dbUtils = {
         console.log("task item exist");
         for (let i = 0; i < all_item.length; i++) {
           let item = all_item[i];
-          // タスクの取り出し( [] => String )
-          let task_text;
-          // タスクが存在するとき
-          if (item.task.length !== 0) {
-            task_text = [];
-            for (let j = 0; j < item.task.length; j++) {
-              task_text.push(item.task[j].task);
-            }
-            // 配列を文字列にする
-            task_text = task_text.join(",");
-          } else {
-            task_text = "";
-          }
           // 完了済みのタスクは表示しない
           if (item.complete === 0) {
             // カードを描画
             inputTask.addTodoCard(
               item.id,
               item.name,
-              task_text,
+              item.task,
               item.deadline,
               item.priority
             );
@@ -61,32 +48,19 @@ const dbUtils = {
   },
   // TODOを追加
   addDb: (id, name, task, deadeline, priority) => {
-    // タスク更新フラグを追加
-    let array;
-    if (task !== "") {
-      array = [];
-      item_array = task.split(",");
-      for (let i = 0; i < item_array.length; i++) {
-        obj = {
-          task: item_array[i],
-          ischeck: 0
-        };
-        array.push(obj);
-      }
-    } else {
-      array = "";
-    }
     // 非同期処理で更新
     db.transaction("rw", db.tasks, async () => {
+      // 日付生成
+      let date_string = moment().format("YYYY/MM/DD HH:mm");
       await db.tasks.add({
         id: id,
         name: name,
-        task: array,
+        task: task,
         deadline: deadeline,
         priority: priority,
         complete: 0,
-        createdate: new Date(),
-        updatedate: new Date()
+        createdate: date_string,
+        updatedate: date_string
       });
     })
       .then(() => {
@@ -103,6 +77,7 @@ const dbUtils = {
   upDateTaskIschek: (id, index, check, target) => {
     // 非同期で取り出す
     db.transaction("rw", db.tasks, async () => {
+      let date_string = moment().format("YYYY/MM/DD HH:mm");
       // idで検索して更新
       await db.tasks
         .where("id")
@@ -115,7 +90,7 @@ const dbUtils = {
             item.task[index].ischeck = 1;
           }
           // updatedateも更新
-          item.updatedate = new Date();
+          item.updatedate = date_string;
         });
     })
       .then(() => {
@@ -129,6 +104,7 @@ const dbUtils = {
   },
   // 完了フラグの更新
   upDateComplete: id => {
+    let date_string = moment().format("YYYY/MM/DD HH:mm");
     // 非同期で取り出す
     db.transaction("rw", db.tasks, async () => {
       // idで検索して更新
@@ -139,7 +115,7 @@ const dbUtils = {
           // completeフラグ更新
           item.complete = 1;
           // updatedateも更新
-          item.updatedate = new Date();
+          item.updatedate = date_string;
         });
     })
       .then(() => {
@@ -156,10 +132,13 @@ const dbUtils = {
     // 非同期で取り出す
     db.transaction("rw", db.tasks, async () => {
       // idで検索して削除
+      // await db.tasks.delete(id);
       await db.tasks
-        .where("id")
-        .equals(id)
-        .delete();
+      .where("id")
+      .equals(id)
+      .modify(item => {
+        delete item;
+      });
     })
       .then(() => {
         console.log("Delete item Complete!");
