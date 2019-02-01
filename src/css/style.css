@@ -88,6 +88,10 @@ body {
     list-style: none;
   }
 
+  #no_item{
+      text-align: center;
+  }
+
   .material-icons.rotate {
 	-webkit-animation: spin 1.5s linear infinite;
 	-moz-animation: spin 1.5s linear infinite;

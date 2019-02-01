@@ -202,6 +202,8 @@ const inputTask = {
     todo_card += " </footer></div></div>";
     // HTMLを表示する
     $("#task_card_inline").append(todo_card);
+    $("#check_task").removeClass("badge");
+    $("#check_task").attr("data-badge", task_array.length);
   },
   // チェックボタンの更新
   isChecked: (target, check) => {

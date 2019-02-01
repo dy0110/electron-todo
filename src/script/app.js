@@ -14,9 +14,16 @@ $(document).ready(() => {
       locale: "ja"
     });
     // 保存されたデータの取り出し
-    dbUtils.getAllTodo();
+    dbUtils.getSaveTodo();
   });
-  $("#load_search_task").load("src/html/search_task.html #search_task_content");
+  $("#load_search_task").load("src/html/search_task.html #search_task_content", () => {
+     // カレンダー定義
+     $("#serach_date").flatpickr({
+      enableTime: false,
+      dateFormat: "Y/m/d",
+      locale: "ja"
+    });
+  });
   $("#load_setting_task").load("src/html/setting_task.html #setting_task_content");
   $("#load_dialog").load("src/html/dialogs.html #dialogs");
   // サイドバー定義
@@ -67,7 +74,8 @@ const app = {
       search_task = false;
       setting_task = false;
       // タスクの取り出し
-      dbUtils.getAllTodo();
+      $("#task_card_inline").children().remove();
+      dbUtils.getSaveTodo();
     }
   },
   // タスク検索ページ
@@ -79,6 +87,8 @@ const app = {
       input_task = false;
       search_task = true;
       setting_task = false;
+      // DBチェック
+      dbUtils.getAllTodo();
     }
   },
   // 設定ページ

@@ -17,30 +17,8 @@ const dbUtils = {
     });
   },
   // 保存されたTODOデータの読み取り(完了フラグが1になっていないものを取り出す)
-  getAllTodo: () => {
+  getSaveTodo: () => {
     db.transaction("r", db.tasks, async () => {
-      // const all_item = await db.tasks.toArray();
-      // if (all_item.length !== 0) {
-      //   // カードを作る
-      //   console.log("task item exist");
-      //   for (let i = 0; i < all_item.length; i++) {
-      //     let item = all_item[i];
-      //     // 完了済みのタスクは表示しない
-      //     if (item.complete === 0) {
-      //       $("#task_card_inline").children().remove();
-      //       // カードを描画
-      //       inputTask.addTodoCard(
-      //         item.uuid,
-      //         item.name,
-      //         item.task,
-      //         item.deadline,
-      //         item.priority
-      //       );
-      //     }
-      //   }
-      // } else {
-      //   console.log("No task item");
-      // }
       await db.tasks
         .where("complete")
         .equals(0)
@@ -56,10 +34,10 @@ const dbUtils = {
         });
     })
       .then(() => {
-        console.log("Get all item Complete!");
+        console.log("Get save item Complete!");
       })
       .catch(e => {
-        console.error("Get all item Failed: " + e);
+        console.error("Get save item Failed: " + e);
       });
   },
   // TODOを追加
@@ -160,6 +138,23 @@ const dbUtils = {
       })
       .catch(e => {
         console.error("Delete item Failed: " + e);
+      });
+  },
+  // 全件検索
+  getAllTodo: () => {
+    db.transaction("r", db.tasks, async () => {
+      const all_item = await db.tasks.toArray();
+      if (all_item.length !== 0) {
+       serachTask.createTableRow( all_item );
+      } else {
+       $("#no_item").show();
+      }
+    })
+      .then(() => {
+        console.log("Get all item Complete!");
+      })
+      .catch(e => {
+        console.error("Get all item Failed: " + e);
       });
   }
 };

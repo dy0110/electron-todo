@@ -14,37 +14,17 @@
       <div class="level-item has-text-centered">
         <div class="field has-addons">
           <p class="control">
-            <div class="dropdown">
-                <div class="dropdown-trigger">
-                    <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu">
-                        <span>検索項目</span>
-                            <span class="icon is-small">
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </span>
-                    </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content">
-                        <a href="#" class="dropdown-item">
-                                 TODO名
-                        </a>
-                        <a class="dropdown-item">
-                                 優先度
-                        </a>
-                        <a href="#" class="dropdown-item">
-                                完了済
-                        </a>
-                        <a href="#" class="dropdown-item">
-                                 未完了
-                        </a>
-                        <a href="#" class="dropdown-item">
-                                作成日
-                      </a>      
-                    </div>
-                </div>
+            <div class="select is-primary">
+                <select id="search_content">
+                    <option value="name">TODO名</option>
+                    <option value="priority">優先度</option>
+                    <option value="complete">完了済みタスク</option>
+                    <option value="notcomplete">未完了タスク</option>
+                    <option value="createdate">作成日</option>
+                  </select>
             </div>
           </p>
-          <p class="control">
+          <p id="serach_text_area" class="control serach_type">
             <input
               id="serach_text"
               class="input is-primary"
@@ -52,8 +32,23 @@
               placeholder="検索ワードを入力"
             />
           </p>
-          <p class="control">
-            <button class="button is-primary">
+          <p id="serach_date_area" class="control serach_type" style="display: none;">
+            <input
+              id="serach_date"
+              class="input is-primary"
+              type="date"
+              placeholder="作成日を入力"
+            />
+          </p>
+            <div id="search_priority" class="select is-primary serach_type" style="display: none;">
+                <select name="" >
+                  <option value="high">高い</option>
+                  <option value="usually">普通</option>
+                  <option value="low">低い</option>
+                 </select>
+              </div>
+          <p id="serach_item_area" class="control">
+            <button id="serach_item" class="button is-primary">
               <i class="material-icons">
                 search
               </i>
@@ -65,6 +60,42 @@
     </div>
   </div>
   <div class="box is-shadowless">
-    <table></table>
+      <div class="level">
+          <div class="level-item has-text-centered">
+              <table class="table is-striped">
+                  <thead>
+                    <tr>
+                      <th>
+                        完了
+                      </th>
+                      <th>
+                        TODO名
+                      </th>
+                      <th>
+                        締め切り
+                      </th>
+                      <th>
+                        優先度
+                      </th>
+                      <th>
+                        タスク
+                      </th>
+                      <th>
+                        作成日
+                      </th>
+                      <th>
+                        削除
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="search_items">
+            
+                  </tbody>
+                </table>
+                <div id="no_item" class="notification" style="display: none;">
+                  登録されたTODOはありません
+                </div>
+          </div>
+        </div>
   </div>
 </div>
