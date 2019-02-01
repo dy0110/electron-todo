@@ -60,20 +60,22 @@ const app = {
   // タスク入力ページ
   changeInputTask: () => {
     if (input_task == false) {
-      $("#input_task").show();
-      $("#search_task").hide();
-      $("#setting_task").hide();
+      $("#load_input_task").show();
+      $("#load_search_task").hide();
+      $("#load_setting_task").hide();
       input_task = true;
       search_task = false;
       setting_task = false;
+      // タスクの取り出し
+      dbUtils.getAllTodo();
     }
   },
   // タスク検索ページ
   changeSearchTask: () => {
     if (search_task == false) {
-      $("#input_task").hide();
-      $("#search_task").show();
-      $("#setting_task").hide();
+      $("#load_input_task").hide();
+      $("#load_search_task").show();
+      $("#load_setting_task").hide();
       input_task = false;
       search_task = true;
       setting_task = false;
@@ -82,9 +84,9 @@ const app = {
   // 設定ページ
   changeSettingTask: () => {
     if (setting_task == false) {
-      $("#input_task").hide();
-      $("#search_task").hide();
-      $("#setting_task").show();
+      $("#load_input_task").hide();
+      $("#load_search_task").hide();
+      $("#load_setting_task").show();
       input_task = false;
       search_task = false;
       setting_task = true;
@@ -97,7 +99,7 @@ const app = {
   // モーダルを閉じる
   closeModal: () => {
     const modal = $("div.modal.is-active");
-    if (modal !== null) {
+    if (modal !== undefined) {
       // モーダルを隠す
       modal.removeClass("is-active");
     }

@@ -4,8 +4,10 @@ const db = new Dexie("AppDB"); // Dexie.jsオブジェクト
 const dbUtils = {
   // indexedDBを開く
   createDb: () => {
+    // プライマリーキー(id)で検索できないので,UUIDを別なテーブルに格納する
     db.version(1).stores({
-      tasks: "&id,name,task,deadline,priority,complete,createdate,updatedate"
+      tasks:
+        "++id,uuid,name,task,deadline,priority,complete,createdate,updatedate"
     });
 
     db.open().catch(err => {
@@ -14,30 +16,44 @@ const dbUtils = {
       );
     });
   },
-  // 保存されたTODOデータの読み取り
+  // 保存されたTODOデータの読み取り(完了フラグが1になっていないものを取り出す)
   getAllTodo: () => {
     db.transaction("r", db.tasks, async () => {
-      const all_item = await db.tasks.toArray();
-      if (all_item.length !== 0) {
-        // カードを作る
-        console.log("task item exist");
-        for (let i = 0; i < all_item.length; i++) {
-          let item = all_item[i];
-          // 完了済みのタスクは表示しない
-          if (item.complete === 0) {
-            // カードを描画
-            inputTask.addTodoCard(
-              item.id,
-              item.name,
-              item.task,
-              item.deadline,
-              item.priority
-            );
-          }
-        }
-      } else {
-        console.log("No task item");
-      }
+      // const all_item = await db.tasks.toArray();
+      // if (all_item.length !== 0) {
+      //   // カードを作る
+      //   console.log("task item exist");
+      //   for (let i = 0; i < all_item.length; i++) {
+      //     let item = all_item[i];
+      //     // 完了済みのタスクは表示しない
+      //     if (item.complete === 0) {
+      //       $("#task_card_inline").children().remove();
+      //       // カードを描画
+      //       inputTask.addTodoCard(
+      //         item.uuid,
+      //         item.name,
+      //         item.task,
+      //         item.deadline,
+      //         item.priority
+      //       );
+      //     }
+      //   }
+      // } else {
+      //   console.log("No task item");
+      // }
+      await db.tasks
+        .where("complete")
+        .equals(0)
+        .each(item => {
+          // カードを描画
+          inputTask.addTodoCard(
+            item.uuid,
+            item.name,
+            item.task,
+            item.deadline,
+            item.priority
+          );
+        });
     })
       .then(() => {
         console.log("Get all item Complete!");
@@ -47,13 +63,13 @@ const dbUtils = {
       });
   },
   // TODOを追加
-  addDb: (id, name, task, deadeline, priority) => {
+  addDb: (uuid, name, task, deadeline, priority) => {
+    // 日付生成
+    let date_string = moment().format("YYYY/MM/DD HH:mm");
     // 非同期処理で更新
     db.transaction("rw", db.tasks, async () => {
-      // 日付生成
-      let date_string = moment().format("YYYY/MM/DD HH:mm");
       await db.tasks.add({
-        id: id,
+        uuid: uuid,
         name: name,
         task: task,
         deadline: deadeline,
@@ -66,7 +82,7 @@ const dbUtils = {
       .then(() => {
         console.log("Add TODO data Complete!");
         // htmlを描画する
-        inputTask.addTodoCard(id, name, task, deadeline, priority);
+        inputTask.addTodoCard(uuid, name, task, deadeline, priority);
       })
       .catch(e => {
         console.error("Add TODO data Failed: " + e);
@@ -74,14 +90,14 @@ const dbUtils = {
   },
 
   // チェックフラグ更新
-  upDateTaskIschek: (id, index, check, target) => {
+  upDateTaskIschek: (uuid, index, check, target) => {
+    let date_string = moment().format("YYYY/MM/DD HH:mm");
     // 非同期で取り出す
     db.transaction("rw", db.tasks, async () => {
-      let date_string = moment().format("YYYY/MM/DD HH:mm");
       // idで検索して更新
       await db.tasks
-        .where("id")
-        .equals(id)
+        .where("uuid")
+        .equals(uuid)
         .modify(item => {
           // ischeckフラグ更新
           if (check === "on") {
@@ -103,14 +119,14 @@ const dbUtils = {
       });
   },
   // 完了フラグの更新
-  upDateComplete: id => {
+  upDateComplete: uuid => {
     let date_string = moment().format("YYYY/MM/DD HH:mm");
     // 非同期で取り出す
     db.transaction("rw", db.tasks, async () => {
       // idで検索して更新
       await db.tasks
-        .where("id")
-        .equals(id)
+        .where("uuid")
+        .equals(uuid)
         .modify(item => {
           // completeフラグ更新
           item.complete = 1;
@@ -121,29 +137,26 @@ const dbUtils = {
       .then(() => {
         console.log("Update ischeck flg Complete!");
         // html更新
-        inputTask.cardDelete(id);
+        inputTask.cardDelete(uuid);
       })
       .catch(e => {
         console.error("Update ischeck flg Failed: " + e);
       });
   },
   // アイテムの削除
-  deleteItem: id => {
+  deleteItem: uuid => {
     // 非同期で取り出す
     db.transaction("rw", db.tasks, async () => {
       // idで検索して削除
-      // await db.tasks.delete(id);
       await db.tasks
-      .where("id")
-      .equals(id)
-      .modify(item => {
-        delete item;
-      });
+        .where("uuid")
+        .equals(uuid)
+        .delete();
     })
       .then(() => {
         console.log("Delete item Complete!");
         // html更新
-        inputTask.cardDelete(id);
+        inputTask.cardDelete(uuid);
       })
       .catch(e => {
         console.error("Delete item Failed: " + e);

@@ -34,7 +34,7 @@ $(document).on("click", "#delete_all_task", () => {
 // TODO登録
 $(document).on("click", "#add_todo", () => {
   // ユニークIDの生成
-  let id = UUID.generate();
+  let uuid = UUID.generate();
   // xss対策
   let todo_name = validator.escape($("#input_name").val());
   if (todo_name === "") {
@@ -47,10 +47,10 @@ $(document).on("click", "#add_todo", () => {
   } else {
     task = task_array;
   }
-  let deade_line = validator.escape($("#input_date").val());
+  let deade_line = $("#input_date").val();
   let priority = $("#input_priority").val();
   // indexedDBへ登録
-  dbUtils.addDb(id, todo_name, task_array, deade_line, priority);
+  dbUtils.addDb(uuid, todo_name, task_array, deade_line, priority);
   // 初期化
   $("#input_name").val("");
   $("#input_date").val("");
@@ -63,21 +63,21 @@ $(document).on("click", ".task_check", event => {
   const target = $(event.target);
   const check = target.attr("check");
   const array_index = target.attr("array_index");
-  const id = target.attr("task_id");
+  const uuid = target.attr("task_id");
   // indexedDB更新
-  dbUtils.upDateTaskIschek(id, array_index, check, target);
+  dbUtils.upDateTaskIschek(uuid, array_index, check, target);
 });
 
 // 完了ボタン 
 $(document).on("click", ".complete_task", event => {
-  const id = $(event.target).attr("task_id");
-  dbUtils.upDateComplete(id);
+  const uuid = $(event.target).attr("task_id");
+  dbUtils.upDateComplete(uuid);
 });
 
 // 削除ボタン
 $(document).on("click", ".delete_task", event => {
-  const id = $(event.target).attr("task_id");
-  dbUtils.deleteItem(id);
+  const uuid = $(event.target).attr("task_id");
+  dbUtils.deleteItem(uuid);
 });
 // == 関数オブジェクト定義 =============
 const inputTask = {
