@@ -42,7 +42,7 @@ $(document).on("click", "#add_todo", () => {
     return;
   }
   let task;
-  if( task_array.length === 0 ){
+  if (task_array.length === 0) {
     task = "";
   } else {
     task = task_array;
@@ -68,7 +68,7 @@ $(document).on("click", ".task_check", event => {
   dbUtils.upDateTaskIschek(uuid, array_index, check, target);
 });
 
-// 完了ボタン 
+// 完了ボタン
 $(document).on("click", ".complete_task", event => {
   const uuid = $(event.target).attr("task_id");
   dbUtils.upDateComplete(uuid);
@@ -91,7 +91,8 @@ const inputTask = {
     let obj = {
       task: clean,
       ischeck: 0
-    }
+    };
+    obj = Base64.encode(JSON.stringify(obj));
     task_array.push(obj);
     $("#check_task").addClass("badge");
     $("#check_task").attr("data-badge", task_array.length);
@@ -103,7 +104,7 @@ const inputTask = {
       .remove();
     if (task_array.length !== 0) {
       for (let i = 0; i < task_array.length; i++) {
-        let item = task_array[i];
+        let item = JSON.parse(Base64.decode(task_array[i]));
         let task_data = "<tr>";
         task_data += "<td class='task_item'>" + item.task + "</td>";
         task_data +=
@@ -171,7 +172,7 @@ const inputTask = {
       // タスクがあればチェックボックス表示
       for (let i = 0; i < task.length; i++) {
         let item_id = UUID.generate();
-        let item = task[i]
+        let item = JSON.parse( Base64.decode( task[i] ) );
         todo_card += '<div class="field task">';
         todo_card +=
           '<input class="switch is-rounded task_check" type="checkbox" id="' +
@@ -179,8 +180,8 @@ const inputTask = {
           '" array_index="' +
           i +
           '" task_id="' +
-          id ;
-        if( item.ischeck === 0 ){
+          id;
+        if (item.ischeck === 0) {
           todo_card += '" check="off"/>';
         } else {
           todo_card += '" check="off" checked="checked"/>';

@@ -96,4 +96,38 @@
     </div>
   </div>
   <!-- subtask_modal -->
+  <!-- show_task_modal -->
+  <div id="show_task_modal" class="modal modal-fx-fadeInScale">
+    <div class="modal-background close_modal"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">タスク一覧</p>
+        <a class="close_modal"><i class="material-icons"> clear </i></a>
+      </header>
+      <div class="modal-card-body">
+        <div class="level">
+          <div class="level-item has-text-centerd">
+            <table class="table is-striped">
+              <thead>
+                <tr>
+                  <th>完了</th>
+                  <th>タスク</th>
+                  <!-- <th>削除</th> -->
+                </tr>
+              </thead>
+              <tbody id="show_all_task"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer class="modal-card-foot">
+        <div class="level">
+          <div class="level-item level-right">
+            <button class="button is-danger close_modal">閉じる</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- show_task_modal -->
 </div>

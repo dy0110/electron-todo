@@ -1,80 +1,85 @@
 <div id="input_task_content">
   <!-- task入力パネル -->
-  <div class="level">
-    <div class="level-item has-text-centerd">
-      <div class="panel">
-        <p class="panel-heading">TODO入力</p>
-        <div class="panel-block">
-          <div class="level">
-            <div class="field is-grouped level-item has-text-centered">
-              <div class="control">
-                <label class="label input_label"
-                  ><i class="material-icons"> event_note </i>
-                  <span
-                    class="badge is-badge-danger is-badge-outlined"
-                    data-badge="必須"
-                  >
-                    TODO名
-                  </span>
-                </label>
-                <input
-                  id="input_name"
-                  class="input is-primary"
-                  type="text"
-                  placeholder="TODOを入力"
-                />
-                <br />
-                <br />
-                <label class="label input_label"
-                  ><i class="material-icons"> sort </i> タスク名</label
-                >
-                <input
-                  id="input_task"
-                  class="input is-primary"
-                  type="text"
-                  pattern=""
-                  placeholder="タスクを入力"
-                />
-                <br />
-                <br />
-                <div class="level-item level-right">
-                  <div class="buttons">
-                    <button class="button is-primary" id="add_task">
-                      タスク追加
-                    </button>
-                    <button class="button is-link" id="check_task">
-                      タスク確認
-                    </button>
-                  </div>
-                </div>
-                <br />
-                <label class="label input_label">
-                  <i class="material-icons"> today </i> 締め切り時刻
-                </label>
-                <input
-                  type="text"
-                  class="input is-primary"
-                  name=""
-                  id="input_date"
-                  placeholder="締め切り時刻を入力"
-                />
-                <br /><br />
-                <label class="label input_label"
-                  ><i class="material-icons"> priority_high </i>優先度</label
-                >
-                <br />
-                <div class="select is-primary">
-                  <select name="" id="input_priority">
-                    <option value="high">高い</option>
-                    <option value="usually">普通</option>
-                    <option value="low">低い</option>
-                  </select>
-                </div>
-                <br /><br />
-                <div class="level-item level-right">
-                  <button class="button is-link" id="add_todo">登録</button>
-                </div>
+  <div class="box is-shadowless">
+    <div class="level">
+      <div class="level-item level-left">
+        <div class="subtitle input_label">
+          <i class="material-icons">
+            filter_none
+          </i>
+          <p>TODOを入力する</p>
+        </div>
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-item has-text-centered">
+        <div class="field is-grouped">
+          <div class="control">
+            <label class="label input_label"
+              ><i class="material-icons"> event_note </i>
+              <span
+                class="badge is-badge-danger is-badge-outlined"
+                data-badge="必須"
+              >
+                TODO名
+              </span>
+            </label>
+            <input
+              id="input_name"
+              class="input is-primary"
+              type="text"
+              placeholder="TODOを入力"
+            />
+            <br />
+            <br />
+            <label class="label input_label"
+              ><i class="material-icons"> sort </i> タスク名</label
+            >
+            <input
+              id="input_task"
+              class="input is-primary"
+              type="text"
+              pattern=""
+              placeholder="タスクを入力"
+            />
+            <br />
+            <br />
+            <div class="level-item level-right">
+              <div class="buttons">
+                <button class="button is-primary" id="add_task">
+                  タスク追加
+                </button>
+                <button class="button is-link" id="check_task">
+                  タスク確認
+                </button>
               </div>
+            </div>
+            <br />
+            <label class="label input_label">
+              <i class="material-icons"> today </i> 締め切り時刻
+            </label>
+            <input
+              type="text"
+              class="input is-primary"
+              name=""
+              id="input_date"
+              placeholder="締め切り時刻を入力"
+            />
+            <br /><br />
+            <label class="label input_label"
+              ><i class="material-icons"> priority_high </i>優先度</label
+            >
+            <br />
+            <div class="select is-primary">
+              <select name="" id="input_priority">
+                <option value="high">高い</option>
+                <option value="usually">普通</option>
+                <option value="low">低い</option>
+              </select>
+            </div>
+            <br /><br />
+            <div class="level-item level-right">
+              <button class="button is-link" id="add_todo">登録</button>
             </div>
           </div>
         </div>

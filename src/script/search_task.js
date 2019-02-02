@@ -5,6 +5,12 @@ $(document).on("change", "#search_content", () => {
   serachTask.changeSerachType(val);
 });
 
+// タスクの確認
+$(document).on("click", ".task_confirmation", () => {
+  let show_task_array = $(".task_confirmation").attr("task_array");
+  serachTask.showTaskState(show_task_array);
+});
+
 // == 関数オブジェクトを定義 =============================
 const serachTask = {
   // 検索タイプ変更
@@ -29,7 +35,10 @@ const serachTask = {
       let row = "<tr id='" + item.uuid + "'>";
       // 完了
       if (item.complete === 0) {
-        row += "<td>" + '<i class="material-icons">check_box_outline_blank</i>'+ "</td>";
+        row +=
+          "<td>" +
+          '<i class="material-icons">check_box_outline_blank</i>' +
+          "</td>";
       } else if (item.complete === 1) {
         row += "<td>" + '<i class="material-icons">check_box</i>' + "</td>";
       }
@@ -47,8 +56,7 @@ const serachTask = {
       }
       // タスク
       if (item.task.length !== 0) {
-        let str = item.task.join(",");
-        str = Base64.encode(str);
+        str = item.task;
         row += "<td>";
         row +=
           "<button class='button is-info is-rounded task_confirmation' task_array='" +
@@ -70,5 +78,27 @@ const serachTask = {
       row += "</tr>";
       $("#search_items").append(row);
     }
+  },
+  // タスクを表示
+  showTaskState: show_task_array => {
+    let task = show_task_array.split(",");
+    $("#show_all_task")
+      .children()
+      .remove();
+    for (let i = 0; i < task.length; i++) {
+      let item = JSON.parse(Base64.decode(task[i]));
+      let row = "<tr>";
+      row += "<td>";
+      if (item.ischeck === 0) {
+        row += '<i class="material-icons">check_box_outline_blank</i>';
+      } else {
+        row += '<i class="material-icons">check_box</i>';
+      }
+      row += "</td>";
+      row += "<td>" + item.task + "</td>";
+      row += "</tr>";
+      $("#show_all_task").append(row);
+    }
+    $("#show_task_modal").addClass("is-active");
   }
 };
