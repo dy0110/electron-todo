@@ -78,11 +78,13 @@ const dbUtils = {
         .equals(uuid)
         .modify(item => {
           // ischeckフラグ更新
+          let task = JSON.parse(Base64.decode(item.task[index]));
           if (check === "on") {
-            item.task[index].ischeck = 0;
+            task.ischeck = 0;
           } else if (check === "off") {
-            item.task[index].ischeck = 1;
+            task.ischeck = 1;
           }
+          item.task[index] = Base64.encode(JSON.stringify(task));
           // updatedateも更新
           item.updatedate = date_string;
         });
@@ -134,7 +136,11 @@ const dbUtils = {
       .then(() => {
         console.log("Delete item Complete!");
         // html更新
-        inputTask.cardDelete(uuid);
+        if (input_task == true) {
+          inputTask.cardDelete(uuid);
+        } else if (search_task == true) {
+          dbUtils.getAllTodo();
+        }
       })
       .catch(e => {
         console.error("Delete item Failed: " + e);
@@ -145,9 +151,12 @@ const dbUtils = {
     db.transaction("r", db.tasks, async () => {
       const all_item = await db.tasks.toArray();
       if (all_item.length !== 0) {
-       serachTask.createTableRow( all_item );
+        serachTask.createTableRow(all_item);
       } else {
-       $("#no_item").show();
+        $("#search_items")
+          .children()
+          .remove();
+        $("#no_item").show();
       }
     })
       .then(() => {
@@ -155,6 +164,52 @@ const dbUtils = {
       })
       .catch(e => {
         console.error("Get all item Failed: " + e);
+      });
+  },
+  // 日付とTODO名
+  serachIgnoreItem: (word, type) => {
+    let items;
+    // 非同期で取り出す
+    db.transaction("rw", db.tasks, async () => {
+      // idで検索して削除
+      items = await db.tasks
+        .where(type)
+        .equalsIgnoreCase(word)
+        .toArray();
+    })
+      .then(() => {
+        console.log("Serach Ignore Item Complete!");
+        if (items.length === 0) {
+          $("#no_item").show();
+        } else {
+          serachTask.createTableRow(items);
+        }
+      })
+      .catch(e => {
+        console.error("Serach Ignore Item Failed: " + e);
+      });
+  },
+  // 完了フラグ,優先度
+  searchItem: (word, type) => {
+    // 非同期で取り出す
+    let items;
+    db.transaction("rw", db.tasks, async () => {
+      // idで検索して削除
+      items = await db.tasks
+        .where(type)
+        .equals(word)
+        .toArray();
+    })
+      .then(() => {
+        console.log("Serach Item Complete!");
+        if (items.length === 0) {
+          $("#no_item").show();
+        } else {
+          serachTask.createTableRow(items);
+        }
+      })
+      .catch(e => {
+        console.error("Serach Item Failed: " + e);
       });
   }
 };

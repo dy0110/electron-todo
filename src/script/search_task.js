@@ -11,14 +11,43 @@ $(document).on("click", ".task_confirmation", () => {
   serachTask.showTaskState(show_task_array);
 });
 
+// データ削除
+$(document).on("click", ".row_delete", event => {
+  let uuid = $(event.target).attr("uuid");
+  dbUtils.deleteItem(uuid);
+});
+
+// 検索
+$(document).on("click", "#serach_item", () => {
+  let val = $("#search_content").val();
+  if (val === "name") {
+    // TODO名
+    let name = $("#serach_text").val();
+    dbUtils.serachIgnoreItem(name, "name");
+    $("#serach_text").val("");
+  } else if (val === "priority") {
+    // 優先度
+    let priority = $("#search_priority").val();
+    dbUtils.searchItem(priority, "priority");
+  } else if (val === "complete") {
+    // 完了済み
+    dbUtils.searchItem(0, "complete");
+  } else if (val === "notcomplete") {
+    // 未完了
+    dbUtils.searchItem(1, "complete");
+  } else if (val === "createdate") {
+    // 作成日
+    let createdate = $("#serach_date").val();
+    dbUtils.serachIgnoreItem(createdate, "createdate");
+    $("#serach_date").val("");
+  }
+});
+
 // == 関数オブジェクトを定義 =============================
 const serachTask = {
   // 検索タイプ変更
   changeSerachType: val => {
     $(".serach_type").hide();
-    $("#search_items")
-      .children()
-      .remove();
     if (val === "name") {
       $("#serach_text_area").show();
     } else if (val === "priority") {
@@ -30,6 +59,9 @@ const serachTask = {
   // 表示を作る
   createTableRow: items => {
     $("#no_item").hide();
+    $("#search_items")
+      .children()
+      .remove();
     for (let i = 0; i < items.length; i++) {
       let item = items[i];
       let row = "<tr id='" + item.uuid + "'>";
