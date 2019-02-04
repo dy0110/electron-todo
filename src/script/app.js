@@ -10,6 +10,16 @@ $(document).ready(() => {
     // カレンダー定義
     $("#input_date").flatpickr({
       enableTime: true,
+      dateFormat: "Y/m/d",
+      locale: "ja"
+    });
+    $("#input_start_date").flatpickr({
+      enableTime: true,
+      dateFormat: "Y/m/d H:i",
+      locale: "ja"
+    });
+    $("#input_end_date").flatpickr({
+      enableTime: true,
       dateFormat: "Y/m/d H:i",
       locale: "ja"
     });

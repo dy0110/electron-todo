@@ -32,6 +32,10 @@
             />
             <br />
             <br />
+            <div class="level-item level-right">
+                <input class="switch is-rounded" type="checkbox" id="all_day" >
+                <label for="all_day">終日</label>
+            </div>
             <label class="label input_label"
               ><i class="material-icons"> sort </i> タスク名</label
             >
@@ -55,15 +59,38 @@
               </div>
             </div>
             <br />
-            <label class="label input_label">
-              <i class="material-icons"> today </i> 締め切り時刻
+            <label class="label input_label time">
+              <i class="material-icons"> today </i> 開始時刻
             </label>
             <input
               type="text"
-              class="input is-primary"
+              class="input is-primary time"
+              name=""
+              id="input_start_date"
+              placeholder="開始時間を入力"
+            />
+            <br /><br />
+            <label class="label input_label time">
+              <i class="material-icons"> today </i> 終了時刻
+            </label>
+            <input
+              type="text"
+              class="input is-primary time"
+              name=""
+              id="input_end_date"
+              placeholder="終了時刻を入力"
+            />
+            <br /><br />
+            <label class="label input_label date" style="display: none;">
+              <i class="material-icons"> today </i> 日付け入力
+            </label>
+            <input
+              type="text"
+              class="input is-primary date"
               name=""
               id="input_date"
-              placeholder="締め切り時刻を入力"
+              placeholder="日付けを入力"
+              style="display: none;"
             />
             <br /><br />
             <label class="label input_label"

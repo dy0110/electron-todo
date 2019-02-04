@@ -166,29 +166,6 @@ const dbUtils = {
         console.error("Get all item Failed: " + e);
       });
   },
-  // 日付とTODO名
-  serachIgnoreItem: (word, type) => {
-    let items;
-    // 非同期で取り出す
-    db.transaction("rw", db.tasks, async () => {
-      // idで検索して削除
-      items = await db.tasks
-        .where(type)
-        .equalsIgnoreCase(word)
-        .toArray();
-    })
-      .then(() => {
-        console.log("Serach Ignore Item Complete!");
-        if (items.length === 0) {
-          $("#no_item").show();
-        } else {
-          serachTask.createTableRow(items);
-        }
-      })
-      .catch(e => {
-        console.error("Serach Ignore Item Failed: " + e);
-      });
-  },
   // 完了フラグ,優先度
   searchItem: (word, type) => {
     // 非同期で取り出す
@@ -203,6 +180,9 @@ const dbUtils = {
       .then(() => {
         console.log("Serach Item Complete!");
         if (items.length === 0) {
+          $("#search_items")
+            .children()
+            .remove();
           $("#no_item").show();
         } else {
           serachTask.createTableRow(items);

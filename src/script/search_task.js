@@ -20,26 +20,16 @@ $(document).on("click", ".row_delete", event => {
 // 検索
 $(document).on("click", "#serach_item", () => {
   let val = $("#search_content").val();
-  if (val === "name") {
-    // TODO名
-    let name = $("#serach_text").val();
-    dbUtils.serachIgnoreItem(name, "name");
-    $("#serach_text").val("");
-  } else if (val === "priority") {
+  if (val === "priority") {
     // 優先度
     let priority = $("#search_priority").val();
     dbUtils.searchItem(priority, "priority");
   } else if (val === "complete") {
     // 完了済み
-    dbUtils.searchItem(0, "complete");
+    dbUtils.searchItem(1, "complete");
   } else if (val === "notcomplete") {
     // 未完了
-    dbUtils.searchItem(1, "complete");
-  } else if (val === "createdate") {
-    // 作成日
-    let createdate = $("#serach_date").val();
-    dbUtils.serachIgnoreItem(createdate, "createdate");
-    $("#serach_date").val("");
+    dbUtils.searchItem(0, "complete");
   }
 });
 
