@@ -306,6 +306,11 @@ bulma-modal-fx@^1.1.1:
   resolved "https://registry.yarnpkg.com/bulma-modal-fx/-/bulma-modal-fx-1.1.1.tgz#36e1a800cf25e37bbd3963f2ed3136612c8a350a"
   integrity sha512-Ma1e/uczogPd0MzpeOsYJau1ocavO2wlnGg1ZVg+/mrsKyeasrdtyfbOH1kRdzqCH9DMrZAw7WEW0Oa3lKr6Fw==
 
+bulma-toast@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/bulma-toast/-/bulma-toast-1.4.0.tgz#00c6b6431852b1b8b3fd3cfaa196ef3d27ab8dd2"
+  integrity sha512-hYuRA46xwcgEvwlATYgsIwIKuGUkDkSiLWmrmN2+VddWfbL3EPfG1c693jXGKQKH8dWu40R/mCXAwzqs2N2wjw==
+
 bulma@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.2.tgz#8e944377b74c7926558830d38d8e19eaf49f5fb6"

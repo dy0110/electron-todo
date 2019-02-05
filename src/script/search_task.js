@@ -66,8 +66,15 @@ const serachTask = {
       }
       // TODO名
       row += "<td>" + item.name + "</td>";
-      // 締め切り
-      row += "<td>" + item.deadline + "</td>";
+      if (item.allday == 0) {
+        // 開始時刻
+        row += "<td>" + item.start + "</td>";
+        row += "<td>" + item.end + "</td>";
+      } else {
+        row += "<td>" + item.start + "(終日)</td>";
+        row += "<td></td>";
+      }
+
       // 優先度
       if (item.priority === "high") {
         row += "<td>" + priority_obj.high + "</td>";

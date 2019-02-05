@@ -7,7 +7,7 @@ const dbUtils = {
     // プライマリーキー(id)で検索できないので,UUIDを別なテーブルに格納する
     db.version(1).stores({
       tasks:
-        "++id,uuid,name,task,deadline,priority,complete,createdate,updatedate"
+        "++id,uuid,name,task,start,end,allday,priority,complete,notification,createdate,updatedate"
     });
 
     db.open().catch(err => {
@@ -28,7 +28,8 @@ const dbUtils = {
             item.uuid,
             item.name,
             item.task,
-            item.deadline,
+            item.start,
+            item.end,
             item.priority
           );
         });
@@ -41,7 +42,7 @@ const dbUtils = {
       });
   },
   // TODOを追加
-  addDb: (uuid, name, task, deadeline, priority) => {
+  addDb: (uuid, name, task, start, end, allday, priority) => {
     // 日付生成
     let date_string = moment().format("YYYY/MM/DD HH:mm");
     // 非同期処理で更新
@@ -50,9 +51,12 @@ const dbUtils = {
         uuid: uuid,
         name: name,
         task: task,
-        deadline: deadeline,
+        start: start,
+        end: end,
+        allday: allday,
         priority: priority,
         complete: 0,
+        notification: 0,
         createdate: date_string,
         updatedate: date_string
       });
@@ -60,7 +64,7 @@ const dbUtils = {
       .then(() => {
         console.log("Add TODO data Complete!");
         // htmlを描画する
-        inputTask.addTodoCard(uuid, name, task, deadeline, priority);
+        inputTask.addTodoCard(uuid, name, task, start, end, priority);
       })
       .catch(e => {
         console.error("Add TODO data Failed: " + e);
@@ -190,6 +194,54 @@ const dbUtils = {
       })
       .catch(e => {
         console.error("Serach Item Failed: " + e);
+      });
+  },
+  // 通知監視
+  todoNotification: () => {
+    // 非同期で取り出す
+    let items;
+    let now = moment();
+    db.transaction("r", db.tasks, async () => {
+      items = await db.tasks.toArray();
+    })
+      .then(() => {
+        console.log("Todo Notification  Complete!");
+        if (items.length !== 0) {
+          for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let start_moment = moment(item.start);
+            if (item.allday === 0) {
+              // 時刻接待のあるとき
+              let diff = now.diff(start_moment, "minutes");
+              if (diff === 0) {
+                // トーストを出す
+                app.openToast(item.name, item.start, item.end, item.allday);
+              }
+            } else if (item.allday === 1) {
+              // 終日
+              let diff = now.diff(start_moment, "days");
+              if (diff === 0) {
+                // トーストを出す
+                app.openToast(item.name, item.start, "", item.allday);
+              }
+            }
+          }
+        }
+      })
+      .catch(e => {
+        console.error("Todo Notification Failed: " + e);
+      });
+  },
+  // 全件削除
+  clearAllItem: () => {
+    db.transaction("r", db.tasks, async () => {
+      await db.tasks.clear();
+    })
+      .then(() => {
+        console.log("Clear All Item Complete!");
+      })
+      .catch(e => {
+        console.error("Clear All Item Failed: " + e);
       });
   }
 };

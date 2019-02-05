@@ -1,18 +1,54 @@
-<div id="setting_task_content" >
-    <div id="setting_box" class="box is-shadowless">
-        <div class="level">
-          <div class="level-item level-left">
-            <div class="subtitle input_label">
-              <i class="material-icons">
-                search
-              </i>
-              <p>設定</p>
-            </div>
-          </div>
-        </div>
-        <div class="level">
-          <div class="level-item has-text-centered">
-          </div>
+<div id="setting_task_content">
+  <div id="setting_box" class="box is-shadowless">
+    <div class="level">
+      <div class="level-item level-left">
+        <div class="subtitle input_label">
+          <i class="material-icons">
+            settings
+          </i>
+          <p>設定</p>
         </div>
       </div>
     </div>
+    <div class="level">
+      <div class="level-item level-left">
+        <div class="subtitle input_label">
+          <i class="material-icons">
+            delete_forever
+          </i>
+          <p>TODOの全削除</p>
+        </div>
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-item has-text-centered" id="delete_all">
+        <a class="button is-danger">全件削除</a>
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-item level-left">
+        <div class="subtitle input_label">
+          <i class="material-icons">
+            notifications
+          </i>
+          <p>通知設定</p>
+        </div>
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-item has-text-centered">
+        <div class="field notifi_on">
+          <input
+            id="on_notification"
+            type="checkbox"
+            name=""
+            class="switch is-rounded"
+            switch="on"
+            checked="checked"
+          />
+          <label for="switch_notification">通知オン</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

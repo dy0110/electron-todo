@@ -4,7 +4,7 @@ const priority_obj = {
   usually: "普通",
   low: "低い"
 };
-// == イベント定義 ====================
+// == イベント定義 ==========================
 // タスク追加
 $(document).on("click", "#add_task", () => {
   const task = $("#input_task").val();
@@ -47,10 +47,24 @@ $(document).on("click", "#add_todo", () => {
   } else {
     task = task_array;
   }
-  let deade_line = $("#input_date").val();
+  let start;
+  let end;
+  let allday;
+  let switch_flg = $("#all_day").attr("switch");
+  if (switch_flg == "off ") {
+    // 時間
+    start = $("#input_start_date").val();
+    end = $("#input_end_date").val();
+    allday = 0;
+  } else if (switch_flg == "on") {
+    // 終日
+    start = $("#input_date").val();
+    end = "";
+    allday = 1;
+  }
   let priority = $("#input_priority").val();
   // indexedDBへ登録
-  dbUtils.addDb(uuid, todo_name, task_array, deade_line, priority);
+  dbUtils.addDb(uuid, todo_name, task_array, start, end, allday, priority);
   // 初期化
   $("#input_name").val("");
   $("#input_date").val("");
@@ -79,6 +93,21 @@ $(document).on("click", ".delete_task", event => {
   const uuid = $(event.target).attr("task_id");
   dbUtils.deleteItem(uuid);
 });
+
+// 終日
+$(document).on("click", "#all_day", event => {
+  let switch_flg = $(event.target).attr("switch");
+  if (switch_flg == "off") {
+    $(event.target).attr("switch", "on");
+    $(".time").hide();
+    $(".date").show();
+  } else {
+    $(event.target).attr("switch", "off");
+    $(".time").show();
+    $(".date").hide();
+  }
+});
+
 // == 関数オブジェクト定義 =============
 const inputTask = {
   // タスク追加
@@ -137,7 +166,7 @@ const inputTask = {
     app.closeModal();
   },
   // TODO登録 カードを作製
-  addTodoCard: (id, name, task, deadeline, priority) => {
+  addTodoCard: (id, name, task, start, end, priority) => {
     // 優先度判定
     let priority_text;
     if (priority == "high") {
@@ -147,13 +176,6 @@ const inputTask = {
     } else if ((priority = "low")) {
       priority_text = priority_obj.low;
     }
-    // 締め切り
-    let deade_line_text;
-    if (deadeline === "") {
-      deade_line_text = "締め切りなし";
-    } else {
-      deade_line_text = deadeline + "(締め切り)";
-    }
     // カード作製
     let todo_card = '<div class="column is-4">';
     todo_card += '<div class="card" id="' + id + '">';
@@ -162,8 +184,15 @@ const inputTask = {
     todo_card += "</header>";
     todo_card += '<div class="card-content">';
     todo_card += '<div class="content">';
-    todo_card +=
-      '<div class="subtitle task_dead_line">' + deade_line_text + "</div>";
+    if (end === "") {
+      todo_card +=
+      '<div class="subtitle task_strart">' + start + "(終日)</div>";
+    } else {
+      todo_card +=
+        '<div class="subtitle task_strart">' + start + "(開始時間)</div>";
+      todo_card +=
+        '<div class="subtitle task_strart">' + end + "(終了時間)</div>";
+    }
     todo_card +=
       ' <div class="subtitle task_priority">' +
       priority_text +
@@ -172,7 +201,7 @@ const inputTask = {
       // タスクがあればチェックボックス表示
       for (let i = 0; i < task.length; i++) {
         let item_id = UUID.generate();
-        let item = JSON.parse( Base64.decode( task[i] ) );
+        let item = JSON.parse(Base64.decode(task[i]));
         todo_card += '<div class="field task">';
         todo_card +=
           '<input class="switch is-rounded task_check" type="checkbox" id="' +
