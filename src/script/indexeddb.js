@@ -36,6 +36,7 @@ const dbUtils = {
     })
       .then(() => {
         console.log("Get save item Complete!");
+        app.closeLoading();
       })
       .catch(e => {
         console.error("Get save item Failed: " + e);
@@ -165,6 +166,7 @@ const dbUtils = {
     })
       .then(() => {
         console.log("Get all item Complete!");
+        app.closeLoading();
       })
       .catch(e => {
         console.error("Get all item Failed: " + e);

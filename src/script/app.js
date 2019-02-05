@@ -88,6 +88,7 @@ const app = {
   // タスク入力ページ
   changeInputTask: () => {
     if (input_task == false) {
+      app.openLoading();
       $("#load_input_task").show();
       $("#load_search_task").hide();
       $("#load_setting_task").hide();
@@ -104,6 +105,7 @@ const app = {
   // タスク検索ページ
   changeSearchTask: () => {
     if (search_task == false) {
+      app.openLoading();
       $("#load_input_task").hide();
       $("#load_search_task").show();
       $("#load_setting_task").hide();
@@ -117,12 +119,14 @@ const app = {
   // 設定ページ
   changeSettingTask: () => {
     if (setting_task == false) {
+      app.openLoading();
       $("#load_input_task").hide();
       $("#load_search_task").hide();
       $("#load_setting_task").show();
       input_task = false;
       search_task = false;
       setting_task = true;
+      app.closeLoading();
     }
   },
   // ブラウザを開く
@@ -168,5 +172,13 @@ const app = {
       position: "bottom-right",
       dismissible: true
     });
+  },
+  // ローディング表示
+  openLoading: () => {
+    $("#loading").addClass("is-active");
+  },
+  // ローディング非表示
+  closeLoading: () => {
+    $("#loading").removeClass("is-active");
   }
 };
