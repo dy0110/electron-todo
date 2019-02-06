@@ -30,5 +30,6 @@ const settingTask = {
   // 削除
   deleteAll: () => {
     dbUtils.clearAllItem();
+    app.closeModal();
   }
 };

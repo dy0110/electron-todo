@@ -159,19 +159,35 @@ const app = {
     timer = undefined;
   },
   // トーストを出す
-  openToast: (name, start, end, allday) => {
+  openToast: (name, start, end, allday,priority) => {
     let msg;
     if (allday === 0) {
       msg = start + " から " + end + " まで " + name + " の予定です";
     } else if (allday === 1) {
       msg = start + " から終日 " + name + " の予定です";
     }
-    bulmaToast.toast({
-      message: msg,
-      type: "is-primary",
-      position: "bottom-right",
-      dismissible: true
-    });
+    if( priority === "high" ){
+      bulmaToast.toast({
+        message: msg,
+        type: "is-danger",
+        position: "bottom-right",
+        dismissible: true
+      });
+    } else if(priority === "usually"){
+      bulmaToast.toast({
+        message: msg,
+        type: "is-primary",
+        position: "bottom-right",
+        dismissible: true
+      });
+    } else if( priority === "low" ){
+      bulmaToast.toast({
+        message: msg,
+        type: "is-info",
+        position: "bottom-right",
+        dismissible: true
+      });
+    }
   },
   // ローディング表示
   openLoading: () => {

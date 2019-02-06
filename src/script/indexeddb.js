@@ -215,17 +215,33 @@ const dbUtils = {
             if (item.allday === 0) {
               // 時刻接待のあるとき
               let diff = now.diff(start_moment, "minutes");
-              if (diff <= 0) {
+              // 時間が過ぎているかつ通知フラグがオフ
+              if (diff <= 0 && item.notification == 0) {
                 // トーストを出す
-                app.openToast(item.name, item.start, item.end, item.allday);
+                app.openToast(
+                  item.name,
+                  item.start,
+                  item.end,
+                  item.allday,
+                  item.priority
+                );
+                // 通知フラグ更新
                 dbUtils.updateNotification(item.uuid);
               }
             } else if (item.allday === 1) {
               // 終日
               let diff = now.diff(start_moment, "days");
-              if (diff <= 0) {
+              // 時間が過ぎているかつ通知フラグがオフ
+              if (diff <= 0 && item.notification == 0) {
                 // トーストを出す
-                app.openToast(item.name, item.start, "", item.allday);
+                app.openToast(
+                  item.name,
+                  item.start,
+                  "",
+                  item.allday,
+                  item.remove
+                );
+                // 通知フラグ更新
                 dbUtils.updateNotification(item.uuid);
               }
             }
@@ -239,10 +255,16 @@ const dbUtils = {
   // 通知フラグアップデート
   updateNotification: uuid => {
     db.transaction("rw", db.tasks, async () => {
-      await db.tasks.update(uuid, {
-        notification: 1,
-        updatedate: moment().format("YYYY/MM/DD HH:mm")
-      });
+      // idで検索して更新
+      await db.tasks
+        .where("uuid")
+        .equals(uuid)
+        .modify(item => {
+          // completeフラグ更新
+          item.notification = 1;
+          // updatedateも更新
+          item.updatedate = moment().format("YYYY/MM/DD HH:mm");
+        });
     })
       .then(() => {
         console.log("Update Notification Complete!");
@@ -253,7 +275,7 @@ const dbUtils = {
   },
   // 全件削除
   clearAllItem: () => {
-    db.transaction("r", db.tasks, async () => {
+    db.transaction("rw", db.tasks, async () => {
       await db.tasks.clear();
     })
       .then(() => {

@@ -38,7 +38,7 @@ $(document).on("click", "#add_todo", () => {
   // xss対策
   let todo_name = validator.escape($("#input_name").val());
   if (todo_name === "") {
-    openErrorModal("TODO名を入力してください。");
+    app.openErrorModal("TODO名を入力してください。");
     return;
   }
   let task;
@@ -56,17 +56,17 @@ $(document).on("click", "#add_todo", () => {
     start = $("#input_start_date").val();
     end = $("#input_end_date").val();
     if (end < start) {
-      openErrorModal("開始時刻が終了時刻より遅い時間になっています。");
+      app.openErrorModal("開始時刻が終了時刻より遅い時間になっています。");
       return;
     } else if (start == "" || end == "") {
-      openErrorModal("時刻を入力してください。");
+      app.openErrorModal("時刻を入力してください。");
     }
     allday = 0;
   } else if (switch_flg === "on") {
     // 終日
     start = $("#input_date").val();
     if (start == "") {
-      openErrorModal("時刻を入力してください。");
+      app.openErrorModal("時刻を入力してください。");
     }
     end = "";
     allday = 1;
