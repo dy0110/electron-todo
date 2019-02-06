@@ -95,8 +95,6 @@ const serachTask = {
       } else {
         row += "<td>" + "タスクなし" + "</td>";
       }
-      // 作成日
-      row += "<td>" + item.createdate + "</td>";
       // 削除
       row += "<td>";
       row +=

@@ -51,14 +51,23 @@ $(document).on("click", "#add_todo", () => {
   let end;
   let allday;
   let switch_flg = $("#all_day").attr("switch");
-  if (switch_flg == "off ") {
+  if (switch_flg === "off") {
     // 時間
     start = $("#input_start_date").val();
     end = $("#input_end_date").val();
+    if (end < start) {
+      openErrorModal("開始時刻が終了時刻より遅い時間になっています。");
+      return;
+    } else if (start == "" || end == "") {
+      openErrorModal("時刻を入力してください。");
+    }
     allday = 0;
-  } else if (switch_flg == "on") {
+  } else if (switch_flg === "on") {
     // 終日
     start = $("#input_date").val();
+    if (start == "") {
+      openErrorModal("時刻を入力してください。");
+    }
     end = "";
     allday = 1;
   }
@@ -70,6 +79,9 @@ $(document).on("click", "#add_todo", () => {
   $("#input_date").val("");
   task_array = [];
   $("#input_priority").val("high");
+  $("#input_start_date").val("");
+  $("#input_end_date").val("");
+  $("#input_date").val("");
 });
 
 // チェックボックスのコントロール
@@ -186,7 +198,7 @@ const inputTask = {
     todo_card += '<div class="content">';
     if (end === "") {
       todo_card +=
-      '<div class="subtitle task_strart">' + start + "(終日)</div>";
+        '<div class="subtitle task_strart">' + start + "(終日)</div>";
     } else {
       todo_card +=
         '<div class="subtitle task_strart">' + start + "(開始時間)</div>";

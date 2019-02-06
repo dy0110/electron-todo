@@ -207,7 +207,7 @@ const dbUtils = {
       items = await db.tasks.toArray();
     })
       .then(() => {
-        console.log("Todo Notification  Complete!");
+        console.log("Todo Notification Complete!");
         if (items.length !== 0) {
           for (let i = 0; i < items.length; i++) {
             let item = items[i];
@@ -215,16 +215,18 @@ const dbUtils = {
             if (item.allday === 0) {
               // 時刻接待のあるとき
               let diff = now.diff(start_moment, "minutes");
-              if (diff === 0) {
+              if (diff <= 0) {
                 // トーストを出す
                 app.openToast(item.name, item.start, item.end, item.allday);
+                dbUtils.updateNotification(item.uuid);
               }
             } else if (item.allday === 1) {
               // 終日
               let diff = now.diff(start_moment, "days");
-              if (diff === 0) {
+              if (diff <= 0) {
                 // トーストを出す
                 app.openToast(item.name, item.start, "", item.allday);
+                dbUtils.updateNotification(item.uuid);
               }
             }
           }
@@ -232,6 +234,21 @@ const dbUtils = {
       })
       .catch(e => {
         console.error("Todo Notification Failed: " + e);
+      });
+  },
+  // 通知フラグアップデート
+  updateNotification: uuid => {
+    db.transaction("rw", db.tasks, async () => {
+      await db.tasks.update(uuid, {
+        notification: 1,
+        updatedate: moment().format("YYYY/MM/DD HH:mm")
+      });
+    })
+      .then(() => {
+        console.log("Update Notification Complete!");
+      })
+      .catch(e => {
+        console.error("Update Notification Failed: " + e);
       });
   },
   // 全件削除

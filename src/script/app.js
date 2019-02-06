@@ -149,13 +149,13 @@ const app = {
   },
   // タイマーをセット
   setTimer: () => {
-    timer = setTimeout(() => {
+    timer = setInterval(() => {
       dbUtils.todoNotification();
     }, 60000);
   },
   // タイマーをクリア
   clearTimer: () => {
-    window.clearTimeout(timer);
+    window.clearInterval(timer);
     timer = undefined;
   },
   // トーストを出す
