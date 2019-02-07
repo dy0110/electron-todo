@@ -12,12 +12,15 @@ $(document).on("click", "#delete_all_item", () => {
 // スイッチ
 $(document).on("click", "#on_notification", event => {
   let toggle = $(event.target).attr("switch");
+  //$(event.target).attr( "checked","" );
   if (toggle == "on") {
-    // タイマーセット
-    app.setTimer();
-  } else if (toggle == "off") {
     // タイマークリア
     app.clearTimer();
+    $(event.target).attr("switch", "off");
+  } else if (toggle == "off") {
+    // タイマーセット
+    app.setTimer();
+    $(event.target).attr("switch", "on");
   }
 });
 

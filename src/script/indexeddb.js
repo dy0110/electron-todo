@@ -215,8 +215,8 @@ const dbUtils = {
             if (item.allday === 0) {
               // 時刻接待のあるとき
               let diff = now.diff(start_moment, "minutes");
-              // 時間が過ぎているかつ通知フラグがオフ
-              if (diff <= 0 && item.notification == 0) {
+              // 時間が過ぎているかつ通知フラグがオフかつ未完了
+              if (diff <= 0 && item.notification === 0 && item.complete === 0) {
                 // トーストを出す
                 app.openToast(
                   item.name,
@@ -231,8 +231,8 @@ const dbUtils = {
             } else if (item.allday === 1) {
               // 終日
               let diff = now.diff(start_moment, "days");
-              // 時間が過ぎているかつ通知フラグがオフ
-              if (diff <= 0 && item.notification == 0) {
+              // 時間が過ぎているかつ通知フラグがオフかつ未完了
+              if (diff <= 0 && item.notification === 0 && item.complete === 0) {
                 // トーストを出す
                 app.openToast(
                   item.name,

@@ -33,8 +33,13 @@
             <br />
             <br />
             <div class="level-item level-right">
-                <input class="switch is-rounded" type="checkbox" id="all_day" switch="off" >
-                <label for="all_day">終日</label>
+              <input
+                class="switch is-rounded"
+                type="checkbox"
+                id="all_day"
+                switch="off"
+              />
+              <label for="all_day">終日</label>
             </div>
             <label class="label input_label"
               ><i class="material-icons"> sort </i> タスク名</label
@@ -50,10 +55,18 @@
             <br />
             <div class="level-item level-right">
               <div class="buttons">
-                <button class="button is-primary" id="add_task">
+                <button
+                  class="button is-primary tooltip is-tooltip-bottom is-tooltip-multiline"
+                  data-tooltip="細かいタスクを保存できます。"
+                  id="add_task"
+                >
                   タスク追加
                 </button>
-                <button class="button is-link" id="check_task">
+                <button
+                  class="button is-link tooltip is-tooltip-bottom is-tooltip-multiline"
+                  data-tooltip="保存したタスクの確認できます。"
+                  id="check_task"
+                >
                   タスク確認
                 </button>
               </div>
@@ -91,7 +104,7 @@
               id="input_date"
               placeholder="日付けを入力"
               style="display: none;"
-            /> 
+            />
             <br class="date" /><br class="date" />
             <label class="label input_label"
               ><i class="material-icons"> priority_high </i>優先度</label
@@ -106,7 +119,13 @@
             </div>
             <br /><br />
             <div class="level-item level-right">
-              <button class="button is-link" id="add_todo">登録</button>
+              <button
+                class="button is-link tooltip is-tooltip-bottom"
+                data-tooltip="TODO登録"
+                id="add_todo"
+              >
+                登録
+              </button>
             </div>
           </div>
         </div>

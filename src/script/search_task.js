@@ -88,9 +88,9 @@ const serachTask = {
         str = item.task;
         row += "<td>";
         row +=
-          "<button class='button is-info is-rounded task_confirmation' task_array='" +
+          "<button class='button is-info is-rounded task_confirmation tooltip is-tooltip-multiline is-tooltip-bottom' task_array='" +
           str +
-          "'><i class='material-icons'>apps</i>";
+          "' data-tooltip='保存されたタスクと完了状況を確認できます。'><i class='material-icons'>apps</i>";
         row += "</td>";
       } else {
         row += "<td>" + "タスクなし" + "</td>";
@@ -98,9 +98,9 @@ const serachTask = {
       // 削除
       row += "<td>";
       row +=
-        "<button class='button is-danger is-rounded row_delete' uuid='" +
+        "<button class='button is-danger is-rounded row_delete tooltip is-tooltip-multiline is-tooltip-bottom' uuid='" +
         item.uuid +
-        "'><i class='material-icons'>close</i>";
+        "' data-tooltip='このTODOを削除します。'><i class='material-icons'>close</i>";
       row += "</td>";
       row += "</tr>";
       $("#search_items").append(row);
