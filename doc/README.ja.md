@@ -1,6 +1,7 @@
 # Electron製のTODOアプリ
 
 ## 説明
+
 [前回作ったもの](https://github.com/dy0110/todo-app)をベースにElectron+jQuery+blumaを使って単純なTODOアプリを作りました。
 保存したTODOの検索ができたり、通知を出すことができます。
 
@@ -58,4 +59,4 @@ yarn start
 [Daichi Yoshida](https://github.com/dy0110)  
 
 ## ライセンス
-[MIT](electron-todo\LICENCE)
+[MIT](../LICENCE)
